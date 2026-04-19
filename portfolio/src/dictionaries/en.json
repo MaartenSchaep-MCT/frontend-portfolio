@@ -1,5 +1,8 @@
 {
   "general": {
     "welcomeMessage": "Welcome to my portfolio"
+  },
+  "projects": {
+    "viewProject": "View Project"
   }
 }

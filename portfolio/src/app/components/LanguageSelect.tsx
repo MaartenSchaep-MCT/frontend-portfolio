@@ -9,13 +9,9 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
   };
 
   return (
-    <select onChange={handleChange}>
-      <option value="en" selected={defaultLang === "en"}>
-        English
-      </option>
-      <option value="nl" selected={defaultLang === "nl"}>
-        Nederlands
-      </option>
+    <select onChange={handleChange} defaultValue={defaultLang}>
+      <option value="en">English</option>
+      <option value="nl">Nederlands</option>
     </select>
   );
 };
