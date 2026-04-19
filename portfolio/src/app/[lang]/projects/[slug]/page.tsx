@@ -4,23 +4,39 @@ import Markdoc from "@markdoc/markdoc";
 import Image from "next/image";
 import { cacheLife } from "next/cache";
 import cloudinaryLoader from "@/app/cloudinaryLoader";
+import { getDictionary, hasLocale, locales } from "../../../dictionaries";
 
 import keystaticConfig from "../../../../../keystatic.config";
 const reader = createReader(process.cwd(), keystaticConfig);
 export async function generateStaticParams() {
-  const projects = await reader.collections.projects.all();
+  const params = [];
 
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+  for (const lang of locales) {
+    const projects =
+      lang === "nl"
+        ? await reader.collections.projectsNL.all()
+        : await reader.collections.projects.all();
+
+    for (const project of projects) {
+      params.push({
+        lang,
+        slug: project.slug,
+      });
+    }
+  }
+
+  return params;
 }
 
-async function getProject(slug: string) {
+async function getProject(lang: string, slug: string) {
   "use cache";
   cacheLife("days");
   console.log("getting project from file system");
 
-  const project = await reader.collections.projects.read(slug);
+  const project =
+    lang === "nl"
+      ? await reader.collections.projectsNL.read(slug)
+      : await reader.collections.projects.read(slug);
   if (!project) return null;
 
   const { node } = await project.content();
@@ -49,10 +65,10 @@ async function getProject(slug: string) {
 export default async function Project({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const project = await getProject(slug);
+  const { lang, slug } = await params;
+  const project = await getProject(lang, slug);
   if (!project) {
     return <div>No Project Found (slug: {slug})</div>;
   }

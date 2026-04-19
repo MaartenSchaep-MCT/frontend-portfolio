@@ -11,7 +11,7 @@ export default function ProjectCard({
   lang,
   dictionary,
 }: {
-  project: Omit<Entry<(typeof config.collections.projects)>, "content">;
+  project: Omit<Entry<typeof config.collections.projects>, "content">;
   slug: string;
   lang: string;
   dictionary: Dictionary;
@@ -24,7 +24,7 @@ export default function ProjectCard({
         alt={project.title}
         width={project.thumbnail.width!}
         height={project.thumbnail.height!}
-        sizes="(max-width: 768px) 100vw, 768px"
+        sizes="(max-width: 768px) 300vw, 768px"
         priority
       />
       <h3>{project.title}</h3>
