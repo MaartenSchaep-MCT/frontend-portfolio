@@ -106,9 +106,7 @@ export default async function Project({
       </div>
       <div className="[&>article>p]:mb-6 [&>p]:leading-relaxed">
         {Markdoc.renderers.react(project.renderable, React)}
-      </div>{" "}
-      <hr />
-      <a href={`/projects`}>Back to Projects</a>
+      </div>
     </div>
   );
 }

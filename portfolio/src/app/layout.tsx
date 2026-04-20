@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Google_Sans_Code, Google_Sans_Flex } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const googleSansCode = Google_Sans_Code({
   variable: "--font-google-sans-code",
@@ -22,12 +23,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const themeCode = `
+      (function() {
+        try {
+        document.documentElement.classList.toggle(
+          "dark",
+          localStorage.theme === "dark" ||
+            (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+        );
+        } catch (e) {console.error(e);}
+      })();
+    `;
   return (
     <html
       lang="en"
-      className={`${googleSansCode.variable} ${googleSansFlex.variable} h-full antialiased`}
+      className={`${googleSansCode.variable} ${googleSansFlex.variable} h-full antialiased scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{ __html: themeCode }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-heading bg-layer1 text-neutral ">
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,8 +1,16 @@
 {
-  "general": {
-    "welcomeMessage": "Welkom, dit is mijn portfolio!"
+  "hero": {
+    "welcomeMessage": "Hallo, Ik ben Maarten Schaep",
+    "welcomeDescription": "Een tweedejaars MCT student uit België die zich specialiseerd in full-stack development. Ik heb ervaring in frontend en backend, vooral gefocust op .NET, React, Figma en Flutter.",
+    "downloadResume": "Download CV",
+    "seeProjects": "Projecten bekijken"
+  },
+  "technologies": {
+    "technologies": "Technologieën",
+    "myExperience": "Mijn ervaring"
   },
   "projects": {
+    "projects": "Projecten",
     "viewProject": "Project bekijken"
   }
 }
