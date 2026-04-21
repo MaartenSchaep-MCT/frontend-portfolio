@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
   const onClick = () => {
@@ -9,15 +8,23 @@ export default function ThemeToggle() {
         ? "dark"
         : "light";
       const newTheme = currentTheme === "dark" ? "light" : "dark";
-      document.documentElement.classList.remove(currentTheme);
-      document.documentElement.classList.add(newTheme);
-      localStorage.setItem("theme", newTheme);
+      if (!document.startViewTransition) {
+        document.documentElement.classList.remove(currentTheme);
+        document.documentElement.classList.add(newTheme);
+        localStorage.setItem("theme", newTheme);
+        return;
+      }
+      document.startViewTransition(() => {
+        document.documentElement.classList.remove(currentTheme);
+        document.documentElement.classList.add(newTheme);
+        localStorage.setItem("theme", newTheme);
+      });
     }
   };
 
   return (
     <button
-      className="flex items-center overflow-hidden p-03 rounded-full bg-layer2"
+      className="flex items-center overflow-hidden p-03 rounded-full bg-layer2 cursor-pointer hover:bg-layer3 transition-colors ease-normal"
       onClick={onClick}
     >
       <span className="sr-only">Toggle theme</span>
