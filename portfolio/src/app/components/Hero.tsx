@@ -1,9 +1,8 @@
 "use client";
-import cloudinaryLoader from "../cloudinaryLoader";
 import type { Dictionary } from "../dictionaries";
 import useBoop from "../hooks/use-boop";
 import ActionLink from "./ActionLink";
-import Image from "next/image";
+import Image from "./Image";
 
 export const Hero = ({
   dictionary,
@@ -107,14 +106,14 @@ export const Hero = ({
       <div className="relative">
         <Image
           onMouseEnter={waveTrigger}
+          format="webp"
           className="rounded-full z-2 max-w-3xs relative"
-          loader={cloudinaryLoader}
-          src="https://res.cloudinary.com/dcejensy8/image/upload/q_auto/f_auto/v1776697005/maarten_yxeq4r.jpg"
+          src="maarten_yxeq4r"
           alt="Profile picture of Maarten"
           width={240}
           height={240}
           sizes="(max-width: 768px) 100vw, 768px"
-          priority
+          loading="eager"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

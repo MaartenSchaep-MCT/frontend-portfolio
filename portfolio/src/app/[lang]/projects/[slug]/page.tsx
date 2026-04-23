@@ -1,9 +1,8 @@
 import { createReader } from "@keystatic/core/reader";
 import React from "react";
 import Markdoc from "@markdoc/markdoc";
-import Image from "next/image";
+import Image from "@/app/components/Image";
 import { cacheLife } from "next/cache";
-import cloudinaryLoader from "@/app/cloudinaryLoader";
 import { getDictionary, hasLocale, locales } from "../../../dictionaries";
 
 import keystaticConfig from "../../../../../keystatic.config";
@@ -75,13 +74,11 @@ export default async function Project({
   return (
     <div className="max-w-3xl mx-auto py-6 text-left w-full flex flex-col gap-4">
       <Image
-        loader={cloudinaryLoader}
         src={project.thumbnail.src}
         alt={project.title}
         width={project.thumbnail.width!}
         height={project.thumbnail.height!}
         sizes="(max-width: 768px) 100vw, 768px"
-        priority
       />
       <h1 className="text-4xl font-bold">{project.title}</h1>
       <div className="flex gap-2">

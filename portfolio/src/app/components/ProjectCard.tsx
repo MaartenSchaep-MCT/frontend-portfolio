@@ -1,9 +1,8 @@
-import Image from "next/image";
-import cloudinaryLoader from "../cloudinaryLoader";
 import { Entry } from "@keystatic/core/reader";
 import config from "../../../keystatic.config";
 import type { Dictionary } from "../dictionaries";
 import Link from "next/link";
+import Image from "./Image";
 
 export default function ProjectCard({
   project,
@@ -19,13 +18,12 @@ export default function ProjectCard({
   return (
     <div>
       <Image
-        loader={cloudinaryLoader}
+        format="webp"
         src={project.thumbnail.src}
         alt={project.title}
         width={project.thumbnail.width!}
         height={project.thumbnail.height!}
         sizes="(max-width: 768px) 300vw, 768px"
-        priority
       />
       <h3>{project.title}</h3>
       <p>{project.description}</p>
