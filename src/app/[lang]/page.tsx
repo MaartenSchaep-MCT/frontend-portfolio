@@ -1,0 +1,113 @@
+import React from 'react'
+import { cacheLife } from 'next/cache'
+import { notFound } from 'next/navigation'
+import { createReader } from '@keystatic/core/reader'
+import Markdoc from '@markdoc/markdoc'
+
+import keystaticConfig from '../../../keystatic.config'
+import Container from '../components/Container'
+import { Hero } from '../components/Hero'
+import ProjectCard from '../components/ProjectCard'
+import TechnologyCard from '../components/TechnologyCard'
+import { getDictionary, hasLocale, locales } from '../dictionaries'
+
+const reader = createReader(process.cwd(), keystaticConfig)
+export async function generateStaticParams() {
+  return locales.map(locale => ({
+    lang: locale,
+  }))
+}
+async function getProjects(lang: string) {
+  'use cache'
+  cacheLife('days')
+  const allProjects =
+    lang === 'nl'
+      ? await reader.collections.projectsNL.all()
+      : await reader.collections.projects.all()
+  return allProjects.map(project => {
+    const { content, ...serializableEntry } = project.entry
+    return {
+      slug: project.slug,
+      entry: serializableEntry,
+    }
+  })
+}
+async function getTechnologies(lang: string) {
+  'use cache'
+  cacheLife('days')
+  const allTechnologies =
+    lang === 'nl'
+      ? await reader.collections.technologiesNL.all()
+      : await reader.collections.technologies.all()
+
+  const allProjects =
+    lang === 'nl'
+      ? await reader.collections.projectsNL.all()
+      : await reader.collections.projects.all()
+  return Promise.all(
+    allTechnologies.map(async technology => {
+      const { experience, projects, ...serializableEntry } = technology.entry
+      const { node } = await technology.entry.experience()
+
+      const renderable = Markdoc.transform(node)
+
+      const populatedProjects = (projects || []).map(projectSlug => {
+        const project = allProjects.find(p => p.slug === projectSlug)
+        return {
+          slug: projectSlug,
+          title: project?.entry.title || projectSlug,
+          description: project?.entry.description || null,
+        }
+      })
+
+      return {
+        slug: technology.slug,
+        entry: {
+          ...serializableEntry,
+          projects: populatedProjects,
+        },
+        renderedExperience: JSON.parse(JSON.stringify(renderable)),
+      }
+    }),
+  )
+}
+export default async function Page({ params }: PageProps<'/[lang]'>) {
+  const { lang } = await params
+
+  if (!hasLocale(lang)) {
+    notFound()
+  }
+
+  const dictionary = await getDictionary(lang)
+  const projects = await getProjects(lang)
+  const technologies = await getTechnologies(lang)
+
+  console.log(projects)
+  return (
+    <Container>
+      <Hero dictionary={dictionary} lang={lang} />
+      <div className="grid grid-cols-2">
+        {technologies.map(technology => (
+          <TechnologyCard
+            key={technology.slug}
+            technology={technology.entry}
+            lang={lang}
+          >
+            {Markdoc.renderers.react(technology.renderedExperience, React)}
+          </TechnologyCard>
+        ))}
+      </div>
+      <div className="grid grid-cols-2" id="projects">
+        {projects.map(project => (
+          <ProjectCard
+            key={project.slug}
+            project={project.entry}
+            slug={project.slug}
+            lang={lang}
+            dictionary={dictionary}
+          />
+        ))}
+      </div>
+    </Container>
+  )
+}
