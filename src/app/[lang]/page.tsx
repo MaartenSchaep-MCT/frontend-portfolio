@@ -18,8 +18,8 @@ export async function generateStaticParams() {
   }))
 }
 async function getProjects(lang: string) {
-  'use cache'
-  cacheLife('days')
+  // 'use cache'
+  // cacheLife('days')
   const allProjects =
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
