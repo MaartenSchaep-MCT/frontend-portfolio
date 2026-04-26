@@ -10,7 +10,7 @@ import Tag from '@/app/components/Tag'
 import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
-const reader = createReader('', keystaticConfig)
+const reader = createReader(process.cwd(), keystaticConfig)
 export async function generateStaticParams() {
   const params = []
 
