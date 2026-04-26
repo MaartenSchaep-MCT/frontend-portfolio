@@ -11,6 +11,8 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
+export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
 const reader = createReader(process.cwd(), keystaticConfig)
 export async function generateStaticParams() {
   return locales.map(locale => ({
