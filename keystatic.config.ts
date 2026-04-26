@@ -1,13 +1,18 @@
 import { collection, config, fields } from '@keystatic/core'
 
+const isProduction = process.env.NODE_ENV === 'production'
 export default config({
-  storage: {
-    kind: 'github',
-    repo: {
-      owner: 'MaartenSchaep-MCT',
-      name: 'frontend-portfolio',
-    },
-  },
+  storage: isProduction
+    ? {
+        kind: 'github',
+        repo: {
+          owner: 'MaartenSchaep-MCT',
+          name: 'frontend-portfolio',
+        },
+      }
+    : {
+        kind: 'local',
+      },
   collections: {
     projects: collection({
       label: 'Projects EN',
