@@ -2,11 +2,11 @@ import { collection, config, fields } from '@keystatic/core'
 
 export default config({
   storage: {
-    kind: 'local',
-    // repo: {
-    //   owner: "MaartenSchaep-MCT",
-    //   name: "frontend-portfolio",
-    // },
+    kind: 'github',
+    repo: {
+      owner: 'MaartenSchaep-MCT',
+      name: 'frontend-portfolio',
+    },
   },
   collections: {
     projects: collection({
@@ -31,6 +31,7 @@ export default config({
               label: 'Label',
               validation: { isRequired: true },
             }),
+            isCTA: fields.checkbox({ label: 'Is CTA' }),
 
             url: fields.url({ label: 'URL', validation: { isRequired: true } }),
           }),
@@ -65,6 +66,7 @@ export default config({
               label: 'Label',
               validation: { isRequired: true },
             }),
+            isCTA: fields.checkbox({ label: 'Is CTA' }),
 
             url: fields.url({ label: 'URL', validation: { isRequired: true } }),
           }),

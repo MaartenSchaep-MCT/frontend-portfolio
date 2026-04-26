@@ -3,7 +3,9 @@ import { cacheLife } from 'next/cache'
 import { createReader } from '@keystatic/core/reader'
 import Markdoc from '@markdoc/markdoc'
 
+import ActionLink from '@/app/components/ActionLink'
 import Image from '@/app/components/Image'
+import Tag from '@/app/components/Tag'
 
 import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
@@ -58,7 +60,11 @@ async function getProject(lang: string, slug: string) {
       height: project.thumbnail.height,
     },
     tags: [...project.tags],
-    links: project.links.map(link => ({ url: link.url, title: link.title })),
+    links: project.links.map(link => ({
+      url: link.url,
+      title: link.title,
+      isCta: link.isCTA,
+    })),
     renderable: JSON.parse(JSON.stringify(renderable)),
   }
 }
@@ -81,30 +87,29 @@ export default async function Project({
         width={project.thumbnail.width!}
         height={project.thumbnail.height!}
         sizes="(max-width: 768px) 100vw, 768px"
+        className="rounded-l"
       />
-      <h1 className="text-4xl font-bold">{project.title}</h1>
+      <h1 className="text-12 font-medium">{project.title}</h1>
+      <p>{project.description}</p>
       <div className="flex gap-2">
         {project.tags.map(tag => (
-          <span key={tag} className="rounded bg-gray-900 p-2">
-            {tag}
-          </span>
+          <Tag key={tag} text={tag} className="bg-layer2"></Tag>
         ))}
       </div>
-      <p>{project.description}</p>
-      <div className="flex gap-4">
-        {project.links.map(link => (
-          <a
-            key={link.url}
-            href={link.url}
-            target="_blank"
-            className="block rounded bg-gray-800 px-6 py-4 hover:underline"
-          >
-            {link.title}
-          </a>
-        ))}
-      </div>
+
       <div className="[&>article>p]:mb-6 [&>p]:leading-relaxed">
         {Markdoc.renderers.react(project.renderable, React)}
+      </div>
+      <div className="flex gap-4">
+        {project.links.map(link => (
+          <ActionLink
+            isCTA={link.isCta}
+            key={link.url}
+            href={link.url}
+            isExternal={true}
+            text={link.title}
+          />
+        ))}
       </div>
     </div>
   )

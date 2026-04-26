@@ -86,27 +86,40 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
   return (
     <Container>
       <Hero dictionary={dictionary} lang={lang} />
-      <div className="grid grid-cols-2">
-        {technologies.map(technology => (
-          <TechnologyCard
-            key={technology.slug}
-            technology={technology.entry}
-            lang={lang}
-          >
-            {Markdoc.renderers.react(technology.renderedExperience, React)}
-          </TechnologyCard>
-        ))}
-      </div>
-      <div className="grid grid-cols-2" id="projects">
-        {projects.map(project => (
-          <ProjectCard
-            key={project.slug}
-            project={project.entry}
-            slug={project.slug}
-            lang={lang}
-            dictionary={dictionary}
-          />
-        ))}
+
+      <div className="gap-09 flex flex-col">
+        <section className="gap-05 flex flex-col">
+          <h2 className="text-7 leading-07 font-medium">
+            {dictionary.technologies.technologies}
+          </h2>
+          <div className="gap-06 grid grid-cols-4">
+            {technologies.map(technology => (
+              <TechnologyCard
+                key={technology.slug}
+                technology={technology.entry}
+                lang={lang}
+              >
+                {Markdoc.renderers.react(technology.renderedExperience, React)}
+              </TechnologyCard>
+            ))}
+          </div>
+        </section>
+        <section className="gap-05 flex flex-col">
+          <h2 className="text-7 leading-07 font-medium">
+            {dictionary.projects.projects}
+          </h2>
+          <div className="grid grid-cols-2" id="projects">
+            {projects.map(project => (
+              <ProjectCard
+                key={project.slug}
+                project={project.entry}
+                slug={project.slug}
+                lang={lang}
+                dictionary={dictionary}
+              />
+            ))}
+          </div>
+        </section>
       </div>
     </Container>
   )

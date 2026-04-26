@@ -24,23 +24,27 @@ export default function TechnologyCard({
   lang: string
 }) {
   return (
-    <div>
+    <div className="gap-05 bg-layer2 py-04 px-06 rounded-m flex items-center text-left">
       <Image
         src={technology.icon}
         alt={technology.title}
-        width={40}
-        height={40}
+        width={32}
+        height={32}
       />
-      <h2>{technology.title}</h2>
-      <p>{technology.description}</p>
-      {children}
+      <div className="flex flex-col">
+        <h2>{technology.title}</h2>
+        <span className="text-soft text-2 leading-05 font-normal">
+          {technology.description}
+        </span>
+      </div>
+      {/*{children}
       {technology.projects.map(project => (
         <div key={project.slug}>
           <p>{project.title}</p>
           <p>{project.description}</p>
           <Link href={`/${lang}/projects/${project.slug}`}>View project</Link>
         </div>
-      ))}
+      ))}*/}
     </div>
   )
 }
