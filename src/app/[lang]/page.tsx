@@ -17,7 +17,6 @@ export async function generateStaticParams() {
     lang: locale,
   }))
 }
-export const runtime = 'edge'
 async function getProjects(lang: string) {
   'use cache'
   cacheLife('days')
