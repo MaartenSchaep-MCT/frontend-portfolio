@@ -4,7 +4,6 @@ import Negotiator from 'negotiator'
 
 const locales = ['en', 'nl', 'nl']
 const defaultLocale = 'en'
-export const runtime = 'edge'
 function getLocale(request: NextRequest) {
   const negotiatorHeaders: Record<string, string> = {}
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
