@@ -33,8 +33,8 @@ async function getProjects(lang: string) {
   })
 }
 async function getTechnologies(lang: string) {
-  'use cache'
-  cacheLife('days')
+  // 'use cache'
+  // cacheLife('days')
   const allTechnologies =
     lang === 'nl'
       ? await reader.collections.technologiesNL.all()
