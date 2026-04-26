@@ -11,13 +11,12 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-const reader = createReader(process.cwd(), keystaticConfig)
+const reader = createReader('', keystaticConfig)
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
   }))
 }
-export const runtime = 'edge'
 async function getProjects(lang: string) {
   'use cache'
   cacheLife('days')
