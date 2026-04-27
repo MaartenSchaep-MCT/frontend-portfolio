@@ -32,7 +32,7 @@ const reader =
         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
         token: process.env.KEYSTATIC_GITHUB_TOKEN,
       })
-console.log('reader created', reader)
+console.log('reader created : ', reader.config)
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
@@ -48,7 +48,7 @@ async function getProjects(lang: string) {
   )
   // Check if token exists (don't log the whole thing for security, just the length)
   console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
-  console.log('getProjects')
+  console.log('getProjects', reader)
   const allProjects =
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
