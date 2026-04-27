@@ -41,6 +41,13 @@ export async function generateStaticParams() {
 async function getProjects(lang: string) {
   // 'use cache'
   // cacheLife('days')
+  console.log('--- Debugging GitHub Request PROJECTS ---')
+  console.log(
+    'Repo String:',
+    `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+  )
+  // Check if token exists (don't log the whole thing for security, just the length)
+  console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
   console.log('getProjects')
   const allProjects =
     lang === 'nl'
@@ -57,6 +64,15 @@ async function getProjects(lang: string) {
 async function getTechnologies(lang: string) {
   // 'use cache'
   // cacheLife('days')
+  console.log('--- Debugging GitHub Request TECHNOLOGIES ---')
+  console.log(
+    'Repo String:',
+    `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+  )
+  // Check if token exists (don't log the whole thing for security, just the length)
+  console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
+  console.log('getTechnologies')
+
   const allTechnologies =
     lang === 'nl'
       ? await reader.collections.technologiesNL.all()
