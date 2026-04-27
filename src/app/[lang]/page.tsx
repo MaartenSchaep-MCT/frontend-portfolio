@@ -12,6 +12,23 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
+if (typeof window === 'undefined') {
+  const originalFetch = globalThis.fetch
+
+  globalThis.fetch = (url, init) => {
+    const headers = new Headers(init?.headers)
+
+    // GitHub API requires a User-Agent. Cloudflare doesn't always provide one.
+    if (!headers.has('User-Agent')) {
+      headers.set('User-Agent', 'Keystatic-App/1.0.0')
+    }
+
+    return originalFetch(url, {
+      ...init,
+      headers,
+    })
+  }
+}
 console.log(`repo: ${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`)
 console.log(`token: ${process.env.KEYSTATIC_GITHUB_TOKEN}`)
 const testRes = await fetch(
