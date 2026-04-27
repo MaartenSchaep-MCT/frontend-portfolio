@@ -12,6 +12,8 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
+console.log(`repo: ${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`)
+console.log(`token: ${process.env.KEYSTATIC_GITHUB_TOKEN}`)
 const reader =
   process.env.NODE_ENV === 'development'
     ? createReader(process.cwd(), keystaticConfig)
