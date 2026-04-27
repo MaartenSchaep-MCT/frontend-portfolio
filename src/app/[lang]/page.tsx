@@ -2,6 +2,7 @@ import React from 'react'
 import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { createReader } from '@keystatic/core/reader'
+import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
 import keystaticConfig from '../../../keystatic.config'
@@ -11,7 +12,13 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-const reader = createReader(process.cwd(), keystaticConfig)
+const reader =
+  process.env.NODE_ENV === 'development'
+    ? createReader(process.cwd(), keystaticConfig)
+    : createGitHubReader(keystaticConfig, {
+        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+        token: process.env.KEYSTATIC_GITHUB_TOKEN,
+      })
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,

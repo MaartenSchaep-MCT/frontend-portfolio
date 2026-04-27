@@ -1,6 +1,7 @@
 import React from 'react'
 import { cacheLife } from 'next/cache'
 import { createReader } from '@keystatic/core/reader'
+import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
 import ActionLink from '@/app/components/ActionLink'
@@ -10,7 +11,13 @@ import Tag from '@/app/components/Tag'
 import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
-const reader = createReader(process.cwd(), keystaticConfig)
+const reader =
+  process.env.NODE_ENV === 'development'
+    ? createReader(process.cwd(), keystaticConfig)
+    : createGitHubReader(keystaticConfig, {
+        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+        token: process.env.KEYSTATIC_GITHUB_TOKEN,
+      })
 export async function generateStaticParams() {
   const params = []
 
