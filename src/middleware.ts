@@ -13,6 +13,12 @@ function getLocale(request: NextRequest) {
 }
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  if (
+    pathname.startsWith('/keystatic') ||
+    pathname.startsWith('/api/keystatic')
+  ) {
+    return NextResponse.next()
+  }
   const pathnameHasLocale = locales.some(
     locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   )
