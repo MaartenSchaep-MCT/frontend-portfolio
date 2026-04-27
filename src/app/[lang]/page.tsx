@@ -14,6 +14,17 @@ import { getDictionary, hasLocale, locales } from '../dictionaries'
 
 console.log(`repo: ${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`)
 console.log(`token: ${process.env.KEYSTATIC_GITHUB_TOKEN}`)
+const testRes = await fetch(
+  `https://api.github.com/repos/${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+  {
+    headers: {
+      Authorization: `token ${process.env.KEYSTATIC_GITHUB_TOKEN}`,
+      'User-Agent': 'Cloudflare-Worker',
+    },
+  },
+)
+
+console.log('GitHub API Status:', testRes.status)
 const reader =
   process.env.NODE_ENV === 'development'
     ? createReader(process.cwd(), keystaticConfig)
@@ -21,6 +32,7 @@ const reader =
         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
         token: process.env.KEYSTATIC_GITHUB_TOKEN,
       })
+console.log('reader created')
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
@@ -29,6 +41,7 @@ export async function generateStaticParams() {
 async function getProjects(lang: string) {
   // 'use cache'
   // cacheLife('days')
+  console.log('getProjects')
   const allProjects =
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
