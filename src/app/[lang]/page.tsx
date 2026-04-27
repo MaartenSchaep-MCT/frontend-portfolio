@@ -12,6 +12,12 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
+if (typeof self !== 'undefined' && !navigator.userAgent) {
+  Object.defineProperty(navigator, 'userAgent', {
+    get: () => 'keystatic-reader',
+    configurable: true,
+  })
+}
 console.log(`repo: ${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`)
 console.log(`token: ${process.env.KEYSTATIC_GITHUB_TOKEN}`)
 const testRes = await fetch(
