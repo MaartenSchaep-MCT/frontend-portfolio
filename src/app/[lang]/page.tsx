@@ -12,12 +12,6 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-if (typeof self !== 'undefined' && !navigator.userAgent) {
-  Object.defineProperty(navigator, 'userAgent', {
-    get: () => 'keystatic-reader',
-    configurable: true,
-  })
-}
 console.log(`repo: ${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`)
 console.log(`token: ${process.env.KEYSTATIC_GITHUB_TOKEN}`)
 const testRes = await fetch(
@@ -47,19 +41,6 @@ export async function generateStaticParams() {
 async function getProjects(lang: string) {
   // 'use cache'
   // cacheLife('days')
-  if (typeof navigator !== 'undefined' && !navigator.userAgent) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(navigator as any).userAgent = 'Keystatic-Bot'
-  }
-
-  const reader =
-    process.env.NODE_ENV === 'development'
-      ? createReader(process.cwd(), keystaticConfig)
-      : createGitHubReader(keystaticConfig, {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}` as any,
-          token: process.env.KEYSTATIC_GITHUB_TOKEN!,
-        })
   console.log('--- Debugging GitHub Request PROJECTS ---')
   console.log(
     'Repo String:',
@@ -83,19 +64,6 @@ async function getProjects(lang: string) {
 async function getTechnologies(lang: string) {
   // 'use cache'
   // cacheLife('days')
-  if (typeof navigator !== 'undefined' && !navigator.userAgent) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(navigator as any).userAgent = 'Keystatic-Bot'
-  }
-
-  const reader =
-    process.env.NODE_ENV === 'development'
-      ? createReader(process.cwd(), keystaticConfig)
-      : createGitHubReader(keystaticConfig, {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}` as any,
-          token: process.env.KEYSTATIC_GITHUB_TOKEN!,
-        })
   console.log('--- Debugging GitHub Request TECHNOLOGIES ---')
   console.log(
     'Repo String:',
