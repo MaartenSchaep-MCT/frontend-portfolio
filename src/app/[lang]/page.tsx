@@ -32,7 +32,7 @@ const reader =
         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
         token: process.env.KEYSTATIC_GITHUB_TOKEN,
       })
-console.log('reader created')
+console.log('reader created', reader)
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
@@ -53,6 +53,7 @@ async function getProjects(lang: string) {
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
       : await reader.collections.projects.all()
+  console.log('projects read', allProjects)
   return allProjects.map(project => {
     const { content, ...serializableEntry } = project.entry
     return {
