@@ -2,7 +2,6 @@ import React from 'react'
 import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { createReader } from '@keystatic/core/reader'
-import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
 import keystaticConfig from '../../../keystatic.config'
@@ -12,7 +11,10 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-const reader = createReader(process.cwd(), keystaticConfig)
+const reader = createReader(process.cwd(), {
+  ...keystaticConfig,
+  storage: { kind: 'local' },
+})
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,

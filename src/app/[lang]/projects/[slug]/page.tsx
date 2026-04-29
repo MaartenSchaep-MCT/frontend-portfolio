@@ -18,7 +18,10 @@ import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 //         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
 //         token: process.env.KEYSTATIC_GITHUB_TOKEN,
 //       })
-const reader = createReader(process.cwd(), keystaticConfig)
+const reader = createReader(process.cwd(), {
+  ...keystaticConfig,
+  storage: { kind: 'local' },
+})
 export async function generateStaticParams() {
   const params = []
 
