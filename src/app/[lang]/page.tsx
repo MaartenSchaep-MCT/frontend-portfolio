@@ -12,44 +12,7 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-if (typeof window === 'undefined') {
-  const originalFetch = globalThis.fetch
-
-  globalThis.fetch = (url, init) => {
-    const headers = new Headers(init?.headers)
-
-    // GitHub API requires a User-Agent. Cloudflare doesn't always provide one.
-    if (!headers.has('User-Agent')) {
-      headers.set('User-Agent', 'Keystatic-App/1.0.0')
-    }
-
-    return originalFetch(url, {
-      ...init,
-      headers,
-    })
-  }
-}
-console.log(`repo: ${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`)
-console.log(`token: ${process.env.KEYSTATIC_GITHUB_TOKEN}`)
-const testRes = await fetch(
-  `https://api.github.com/repos/${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-  {
-    headers: {
-      Authorization: `token ${process.env.KEYSTATIC_GITHUB_TOKEN}`,
-      'User-Agent': 'Cloudflare-Worker',
-    },
-  },
-)
-
-console.log('GitHub API Status:', testRes.status)
-const reader =
-  process.env.NODE_ENV === 'development'
-    ? createReader(process.cwd(), keystaticConfig)
-    : createGitHubReader(keystaticConfig, {
-        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-        token: process.env.KEYSTATIC_GITHUB_TOKEN,
-      })
-console.log('reader created : ', reader.config)
+const reader = createReader(process.cwd(), keystaticConfig)
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
@@ -58,11 +21,6 @@ export async function generateStaticParams() {
 async function getProjects(lang: string) {
   // 'use cache'
   // cacheLife('days')
-  console.log('--- Debugging GitHub Request PROJECTS ---')
-  console.log(
-    'Repo String:',
-    `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-  )
   // Check if token exists (don't log the whole thing for security, just the length)
   console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
   console.log('getProjects', reader)

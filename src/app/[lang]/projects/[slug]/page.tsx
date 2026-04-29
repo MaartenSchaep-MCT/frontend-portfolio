@@ -11,13 +11,14 @@ import Tag from '@/app/components/Tag'
 import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
-const reader =
-  process.env.NODE_ENV === 'development'
-    ? createReader(process.cwd(), keystaticConfig)
-    : createGitHubReader(keystaticConfig, {
-        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-        token: process.env.KEYSTATIC_GITHUB_TOKEN,
-      })
+// const reader =
+//   process.env.NODE_ENV === 'development'
+//     ? createReader(process.cwd(), keystaticConfig)
+//     : createGitHubReader(keystaticConfig, {
+//         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+//         token: process.env.KEYSTATIC_GITHUB_TOKEN,
+//       })
+const reader = createReader(process.cwd(), keystaticConfig)
 export async function generateStaticParams() {
   const params = []
 
