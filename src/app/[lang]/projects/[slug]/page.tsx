@@ -1,7 +1,5 @@
 import React from 'react'
-import { cacheLife } from 'next/cache'
 import { createReader } from '@keystatic/core/reader'
-import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
 import ActionLink from '@/app/components/ActionLink'
@@ -13,18 +11,30 @@ import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
 export const dynamic = 'force-static'
 export const revalidate = false
-// const reader =
-//   process.env.NODE_ENV === 'development'
-//     ? createReader(process.cwd(), keystaticConfig)
-//     : createGitHubReader(keystaticConfig, {
-//         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-//         token: process.env.KEYSTATIC_GITHUB_TOKEN,
-//       })
-const reader = createReader(process.cwd(), {
-  ...keystaticConfig,
-  storage: { kind: 'local' },
-})
+
+type ProjectData = {
+  title: string
+  description: string
+  thumbnail: { src: string; width: number; height: number }
+  tags: string[]
+  links: { url: string; title: string; isCta: boolean }[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renderable: any
+}
+
+// Module-level cache keyed by `lang/slug`
+// eslint-disable-next-line prefer-const
+let cachedProjects: Record<string, ProjectData> = {}
+
+function getReader() {
+  return createReader(process.cwd(), {
+    ...keystaticConfig,
+    storage: { kind: 'local' },
+  })
+}
+
 export async function generateStaticParams() {
+  const reader = getReader()
   const params = []
 
   for (const lang of locales) {
@@ -34,52 +44,35 @@ export async function generateStaticParams() {
         : await reader.collections.projects.all()
 
     for (const project of projects) {
-      params.push({
-        lang,
-        slug: project.slug,
-      })
+      const { node } = await project.entry.content()
+      const errors = Markdoc.validate(node)
+      if (errors.length) {
+        console.error(errors)
+        throw new Error('Invalid content')
+      }
+
+      cachedProjects[`${lang}/${project.slug}`] = {
+        title: project.entry.title,
+        description: project.entry.description,
+        thumbnail: {
+          src: project.entry.thumbnail.src,
+          width: project.entry.thumbnail.width ?? 800,
+          height: project.entry.thumbnail.height ?? 600,
+        },
+        tags: [...project.entry.tags],
+        links: project.entry.links.map(link => ({
+          url: link.url,
+          title: link.title,
+          isCta: link.isCTA,
+        })),
+        renderable: JSON.parse(JSON.stringify(Markdoc.transform(node))),
+      }
+
+      params.push({ lang, slug: project.slug })
     }
   }
 
   return params
-}
-
-async function getProject(lang: string, slug: string) {
-  // 'use cache'
-  // cacheLife('days')
-  console.log('getting project from file system')
-
-  const project =
-    lang === 'nl'
-      ? await reader.collections.projectsNL.read(slug)
-      : await reader.collections.projects.read(slug)
-  if (!project) return null
-
-  const { node } = await project.content()
-  const errors = Markdoc.validate(node)
-  if (errors.length) {
-    console.error(errors)
-    throw new Error('Invalid content')
-  }
-
-  const renderable = Markdoc.transform(node)
-  // not returning entire object because classes and functions aren't supported in use cache
-  return {
-    title: project.title,
-    description: project.description,
-    thumbnail: {
-      src: project.thumbnail.src,
-      width: project.thumbnail.width,
-      height: project.thumbnail.height,
-    },
-    tags: [...project.tags],
-    links: project.links.map(link => ({
-      url: link.url,
-      title: link.title,
-      isCta: link.isCTA,
-    })),
-    renderable: JSON.parse(JSON.stringify(renderable)),
-  }
 }
 
 export default async function Project({
@@ -88,10 +81,12 @@ export default async function Project({
   params: Promise<{ lang: string; slug: string }>
 }) {
   const { lang, slug } = await params
-  const project = await getProject(lang, slug)
+  const project = cachedProjects[`${lang}/${slug}`]
+
   if (!project) {
     return <div>No Project Found (slug: {slug})</div>
   }
+
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 py-6 text-left">
       <Image
@@ -106,10 +101,9 @@ export default async function Project({
       <p>{project.description}</p>
       <div className="flex gap-2">
         {project.tags.map(tag => (
-          <Tag key={tag} text={tag} className="bg-layer2"></Tag>
+          <Tag key={tag} text={tag} className="bg-layer2" />
         ))}
       </div>
-
       <div className="[&>article>p]:mb-6 [&>p]:leading-relaxed">
         {Markdoc.renderers.react(project.renderable, React)}
       </div>
