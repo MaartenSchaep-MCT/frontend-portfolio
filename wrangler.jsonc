@@ -1,22 +1,23 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
   "name": "frontend-portfolio-worker",
   "compatibility_date": "2026-04-27",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".open-next/assets",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
   },
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "frontend-portfolio-worker"
-    }
+      "service": "frontend-portfolio-worker",
+    },
   ],
   "images": {
-      "binding": "IMAGES"
+    "binding": "IMAGES",
   },
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 }
