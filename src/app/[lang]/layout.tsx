@@ -4,6 +4,9 @@ import Footer from '../components/Footer'
 import NavBar from '../components/NavBar'
 import { hasLocale } from '../dictionaries'
 
+export const revalidate = false
+export const dynamic = 'force-static'
+
 export default async function Layout({
   children,
   params,
