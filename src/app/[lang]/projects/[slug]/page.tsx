@@ -12,7 +12,6 @@ import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
 export const dynamic = 'force-static'
-export const dynamicParams = false
 // const reader =
 //   process.env.NODE_ENV === 'development'
 //     ? createReader(process.cwd(), keystaticConfig)
