@@ -103,6 +103,7 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
   console.log(projects)
   return (
     <Container>
+      <div>Amount of projects: {projects.length}</div>
       <Hero dictionary={dictionary} lang={lang} />
 
       <div className="gap-09 flex flex-col">
