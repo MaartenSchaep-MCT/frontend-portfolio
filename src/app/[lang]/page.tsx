@@ -1,3 +1,5 @@
+import path from 'path'
+
 import React from 'react'
 import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -11,7 +13,7 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-const reader = createReader(process.cwd(), {
+const reader = createReader(path.join(process.cwd()), {
   ...keystaticConfig,
   storage: { kind: 'local' },
 })
@@ -30,7 +32,7 @@ async function getProjects(lang: string) {
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
       : await reader.collections.projects.all()
-  console.log('projects read', allProjects)
+  console.log('projects read:', allProjects.length)
   return allProjects.map(project => {
     const { content, ...serializableEntry } = project.entry
     return {
