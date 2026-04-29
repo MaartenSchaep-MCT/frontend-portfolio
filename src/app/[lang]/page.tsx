@@ -1,6 +1,7 @@
 import path from 'path'
 
 import React from 'react'
+import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { createReader } from '@keystatic/core/reader'
 import Markdoc from '@markdoc/markdoc'
@@ -14,83 +15,99 @@ import { getDictionary, hasLocale, locales } from '../dictionaries'
 
 export const dynamic = 'force-static'
 export const revalidate = false
-
-// Module-level cache — populated once during generateStaticParams at build time
-
-// eslint-disable-next-line prefer-const, @typescript-eslint/no-explicit-any
-let cachedData: Record<string, { projects: any[]; technologies: any[] }> = {}
-
-function getReader() {
-  return createReader(path.join(process.cwd()), {
-    ...keystaticConfig,
-    storage: { kind: 'local' },
+const reader = createReader(path.join(process.cwd()), {
+  ...keystaticConfig,
+  storage: { kind: 'local' },
+})
+export async function generateStaticParams() {
+  return locales.map(locale => ({
+    lang: locale,
+  }))
+}
+async function getProjects(lang: string) {
+  // 'use cache'
+  // cacheLife('days')
+  // Check if token exists (don't log the whole thing for security, just the length)
+  console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
+  console.log('getProjects', reader)
+  const allProjects =
+    lang === 'nl'
+      ? await reader.collections.projectsNL.all()
+      : await reader.collections.projects.all()
+  console.log('projects read:', allProjects.length)
+  return allProjects.map(project => {
+    const { content, ...serializableEntry } = project.entry
+    return {
+      slug: project.slug,
+      entry: serializableEntry,
+    }
   })
 }
+async function getTechnologies(lang: string) {
+  // 'use cache'
+  // cacheLife('days')
+  console.log('--- Debugging GitHub Request TECHNOLOGIES ---')
+  console.log(
+    'Repo String:',
+    `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+  )
+  // Check if token exists (don't log the whole thing for security, just the length)
+  console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
+  console.log('getTechnologies')
 
-export async function generateStaticParams() {
-  const reader = getReader()
+  const allTechnologies =
+    lang === 'nl'
+      ? await reader.collections.technologiesNL.all()
+      : await reader.collections.technologies.all()
 
-  for (const lang of locales) {
-    const allProjects =
-      lang === 'nl'
-        ? await reader.collections.projectsNL.all()
-        : await reader.collections.projects.all()
+  const allProjects =
+    lang === 'nl'
+      ? await reader.collections.projectsNL.all()
+      : await reader.collections.projects.all()
+  return Promise.all(
+    allTechnologies.map(async technology => {
+      const { experience, projects, ...serializableEntry } = technology.entry
+      const { node } = await technology.entry.experience()
 
-    const allTechnologies =
-      lang === 'nl'
-        ? await reader.collections.technologiesNL.all()
-        : await reader.collections.technologies.all()
+      const renderable = Markdoc.transform(node)
 
-    const projects = allProjects.map(project => {
-      const { content, ...serializableEntry } = project.entry
-      return { slug: project.slug, entry: serializableEntry }
-    })
-
-    const technologies = await Promise.all(
-      allTechnologies.map(async technology => {
-        const {
-          experience,
-          projects: techProjects,
-          ...serializableEntry
-        } = technology.entry
-        const { node } = await technology.entry.experience()
-        const renderable = Markdoc.transform(node)
-        const populatedProjects = (techProjects || []).map(projectSlug => {
-          const project = allProjects.find(p => p.slug === projectSlug)
-          return {
-            slug: projectSlug,
-            title: project?.entry.title || projectSlug,
-            description: project?.entry.description || null,
-          }
-        })
+      const populatedProjects = (projects || []).map(projectSlug => {
+        const project = allProjects.find(p => p.slug === projectSlug)
         return {
-          slug: technology.slug,
-          entry: { ...serializableEntry, projects: populatedProjects },
-          renderedExperience: JSON.parse(
-            JSON.stringify(Markdoc.transform(node)),
-          ),
+          slug: projectSlug,
+          title: project?.entry.title || projectSlug,
+          description: project?.entry.description || null,
         }
-      }),
-    )
+      })
 
-    cachedData[lang] = { projects, technologies }
-  }
-
-  return locales.map(locale => ({ lang: locale }))
+      return {
+        slug: technology.slug,
+        entry: {
+          ...serializableEntry,
+          projects: populatedProjects,
+        },
+        renderedExperience: JSON.parse(JSON.stringify(renderable)),
+      }
+    }),
+  )
 }
-
 export default async function Page({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params
 
-  if (!hasLocale(lang)) notFound()
+  if (!hasLocale(lang)) {
+    notFound()
+  }
 
   const dictionary = await getDictionary(lang)
-  const { projects, technologies } = cachedData[lang]
+  const projects = await getProjects(lang)
+  const technologies = await getTechnologies(lang)
 
+  console.log(projects)
   return (
     <Container>
       <div>Amount of projects: {projects.length}</div>
       <Hero dictionary={dictionary} lang={lang} />
+
       <div className="gap-09 flex flex-col">
         <section className="gap-05 flex flex-col">
           <h2 className="text-7 leading-07 font-medium">
