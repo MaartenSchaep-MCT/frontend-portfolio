@@ -13,6 +13,8 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
+export const dynamic = 'force-static'
+export const dynamicParams = false
 const reader = createReader(path.join(process.cwd()), {
   ...keystaticConfig,
   storage: { kind: 'local' },
