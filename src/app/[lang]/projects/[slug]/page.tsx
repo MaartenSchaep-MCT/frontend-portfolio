@@ -19,10 +19,30 @@ export const revalidate = false
 //         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
 //         token: process.env.KEYSTATIC_GITHUB_TOKEN,
 //       })
-const reader = createReader(process.cwd(), {
-  ...keystaticConfig,
-  storage: { kind: 'local' },
-})
+if (typeof window === 'undefined') {
+  const originalFetch = globalThis.fetch
+
+  globalThis.fetch = (url, init) => {
+    const headers = new Headers(init?.headers)
+
+    // GitHub API requires a User-Agent. Cloudflare doesn't always provide one.
+    if (!headers.has('User-Agent')) {
+      headers.set('User-Agent', 'Keystatic-App/1.0.0')
+    }
+
+    return originalFetch(url, {
+      ...init,
+      headers,
+    })
+  }
+}
+const reader =
+  process.env.NODE_ENV === 'development'
+    ? createReader(process.cwd(), keystaticConfig)
+    : createGitHubReader(keystaticConfig, {
+        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
+        token: process.env.KEYSTATIC_GITHUB_TOKEN,
+      })
 export async function generateStaticParams() {
   const params = []
 
