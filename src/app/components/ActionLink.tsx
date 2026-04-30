@@ -32,7 +32,7 @@ export default function ActionLink({
         onMouseEnter={onMouseEnter}
       >
         {text}
-        {icon && <span>{icon}</span>}
+        {icon && <span className="overflow-visible">{icon}</span>}
       </a>
     )
   }
@@ -40,7 +40,7 @@ export default function ActionLink({
     return (
       <a className={btnClass} href={href} onMouseEnter={onMouseEnter}>
         {text}
-        {icon && <span>{icon}</span>}
+        {icon && <span className="overflow-visible">{icon}</span>}
       </a>
     )
   }
@@ -48,7 +48,7 @@ export default function ActionLink({
   return (
     <Link href={href} className={btnClass} onMouseEnter={onMouseEnter}>
       {text}
-      {icon && <span>{icon}</span>}
+      {icon && <span className="overflow-visible">{icon}</span>}
     </Link>
   )
 }

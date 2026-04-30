@@ -56,7 +56,7 @@ export const Hero = ({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-download-icon lucide-download h-4 w-4"
+                className="lucide lucide-download-icon lucide-download h-4 w-4 overflow-visible"
               >
                 <path
                   d="M12 15V3"
@@ -95,7 +95,7 @@ export const Hero = ({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-arrow-right-icon lucide-arrow-right h-4 w-4"
+                className="lucide lucide-arrow-right-icon lucide-arrow-right h-4 w-4 overflow-visible"
               >
                 <path d="M5 12h14" style={arrowStyle} />
                 <path d="m12 5 7 7-7 7" style={arrowStyle} />
