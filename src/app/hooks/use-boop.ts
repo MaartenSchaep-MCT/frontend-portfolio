@@ -10,7 +10,8 @@ function useBoop({
   x = 0,
   y = 0,
   rotation = 0,
-  scale = 1,
+  scaleY = 1,
+  scaleX = 1,
   timing = 300,
   timingFunction = 'cubic-bezier(0.25, 0.1, 0.25, 1)',
   strokeDashoffset = 0,
@@ -27,7 +28,7 @@ function useBoop({
     transform: isBooped
       ? `translate(${x}px, ${y}px)
          rotate(${rotation}deg)
-         scale(${scale})`
+         scale(${scaleY}, ${scaleX})`
       : `translate(0px, 0px)
          rotate(0deg)
          scale(1)`,

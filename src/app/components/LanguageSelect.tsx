@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 
+import useBoop from '../hooks/use-boop'
+
 export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
   const router = useRouter()
   const pathname = usePathname()
@@ -17,9 +19,16 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
     console.log('redirecting to', newPath)
     router.push(newPath)
   }
+  const [globeStyle, globeTrigger] = useBoop({
+    scaleX: 1.1,
+    scaleY: 1.1,
+  })
 
   return (
-    <label className="gap-05 relative flex items-center">
+    <label
+      className="gap-05 relative flex items-center"
+      onMouseEnter={globeTrigger}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -30,6 +39,7 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+        style={globeStyle}
         className="lucide lucide-globe-icon lucide-globe left-05 w-05 h-05 absolute"
       >
         <circle cx="12" cy="12" r="10"></circle>

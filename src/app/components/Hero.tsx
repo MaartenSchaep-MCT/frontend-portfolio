@@ -13,7 +13,8 @@ export const Hero = ({
   lang: string
 }) => {
   const [downloadTrayStyle, downloadTrayTrigger] = useBoop({
-    scale: 1.1,
+    scaleX: 1.1,
+    scaleY: 1.1,
   })
   const [downloadArrowStyle, downloadArrowTrigger] = useBoop({
     y: 3,

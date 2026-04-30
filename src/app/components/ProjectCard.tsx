@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import { Entry } from '@keystatic/core/reader'
 
 import config from '../../../keystatic.config'
 import type { Dictionary } from '../dictionaries'
+import useBoop from '../hooks/use-boop'
 import ActionLink from './ActionLink'
 import Image from './Image'
 import Tag from './Tag'
