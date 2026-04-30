@@ -115,6 +115,7 @@ export const Hero = ({
           height={240}
           sizes="(max-width: 768px) 100vw, 768px"
           loading="eager"
+          fetchPriority="high"
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

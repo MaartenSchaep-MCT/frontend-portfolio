@@ -13,6 +13,7 @@ export default function Image({
   sizes,
   className,
   loading,
+  fetchPriority,
 }: {
   src: string
   alt: string
@@ -23,6 +24,7 @@ export default function Image({
   sizes?: string
   className?: string
   loading?: 'eager' | 'lazy'
+  fetchPriority?: 'high' | 'low'
 }) {
   return (
     <CldImage
@@ -35,6 +37,7 @@ export default function Image({
       sizes={sizes}
       className={className}
       loading={loading}
+      fetchPriority={fetchPriority}
     />
   )
 }
