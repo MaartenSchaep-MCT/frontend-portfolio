@@ -6,8 +6,6 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
-  output: 'standalone',
-  trailingSlash: true,
   reactCompiler: true,
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
 }

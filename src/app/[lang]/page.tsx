@@ -12,7 +12,7 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-export const revalidate = false
+// export const revalidate = false
 if (typeof window === 'undefined') {
   const originalFetch = globalThis.fetch
 
