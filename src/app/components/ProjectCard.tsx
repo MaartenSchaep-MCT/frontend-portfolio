@@ -27,6 +27,7 @@ export default function ProjectCard({
         width={project.thumbnail.width!}
         height={project.thumbnail.height!}
         sizes="(max-width: 768px) 300vw, 768px"
+        className="rounded-l"
       />
       <h3>{project.title}</h3>
       <p>{project.description}</p>
