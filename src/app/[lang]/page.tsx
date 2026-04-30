@@ -73,6 +73,7 @@ async function getTechnologies(lang: string) {
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
       : await reader.collections.projects.all()
+
   return Promise.all(
     allTechnologies.map(async technology => {
       const { experience, projects, ...serializableEntry } = technology.entry
@@ -80,21 +81,22 @@ async function getTechnologies(lang: string) {
 
       const renderable = Markdoc.transform(node)
 
-      const populatedProjects = (projects || []).map(projectSlug => {
-        const project = allProjects.find(p => p.slug === projectSlug)
-        return {
-          slug: projectSlug,
-          title: project?.entry.title || projectSlug,
-          description: project?.entry.description || null,
-        }
-      })
+      const populatedProjects = (projects || [])
+        .map(projectSlug => {
+          const project = allProjects.find(p => p.slug === projectSlug)
+          if (!project) return null
+          const { content, ...serializableProjectEntry } = project.entry
+          return {
+            slug: project.slug,
+            ...serializableProjectEntry,
+          }
+        })
+        .filter((p): p is NonNullable<typeof p> => p !== null)
 
       return {
         slug: technology.slug,
-        entry: {
-          ...serializableEntry,
-          projects: populatedProjects,
-        },
+        ...serializableEntry,
+        projects: populatedProjects,
         renderedExperience: JSON.parse(JSON.stringify(renderable)),
       }
     }),
@@ -120,11 +122,12 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
           <h2 className="text-7 leading-07 font-medium">
             {dictionary.technologies.technologies}
           </h2>
-          <div className="gap-06 grid grid-cols-4">
+          <div className="gap-06 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {technologies.map(technology => (
               <TechnologyCard
+                dictionary={dictionary}
                 key={technology.slug}
-                technology={technology.entry}
+                technology={technology}
                 lang={lang}
               >
                 {Markdoc.renderers.react(technology.renderedExperience, React)}
@@ -136,7 +139,7 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
           <h2 className="text-7 leading-07 font-medium">
             {dictionary.projects.projects}
           </h2>
-          <div className="gap-06 grid grid-cols-2" id="projects">
+          <div className="gap-06 grid grid-cols-1 md:grid-cols-2" id="projects">
             {projects.map(project => (
               <ProjectCard
                 key={project.slug}

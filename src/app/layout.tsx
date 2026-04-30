@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${googleSansCode.variable} ${googleSansFlex.variable} h-full scroll-smooth antialiased`}
+      className={`${googleSansCode.variable} ${googleSansFlex.variable} scroll-py-07 h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -49,7 +49,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: themeCode }}
         />
       </head>
-      <body className="font-heading bg-layer1 text-neutral flex min-h-full flex-col">
+      <body className="scrollbar-subtle bg-layer1 text-neutral flex min-h-full flex-col font-sans font-normal">
         {children}
       </body>
     </html>

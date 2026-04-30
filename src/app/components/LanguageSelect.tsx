@@ -40,12 +40,12 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
         onChange={handleChange}
         value={defaultLang}
         name="language-select"
-        className="hover:bg-layer3 ease-normal min-h-08 py-03 pe-05 ps-09 rounded-m bg-layer2 text-2 gap-05 text-neutral leading-05 flex w-full cursor-pointer items-center overflow-visible border-none font-sans font-normal transition-colors"
+        className="hover:bg-layer3 ease-normal min-h-08 py-03 pe-05 ps-09 rounded-m bg-layer2 text-2 gap-05 text-neutral leading-05 flex w-full cursor-pointer items-center overflow-visible border-none font-sans font-normal transition-colors md:min-w-[22ch]"
       >
-        <option value="en" className="py-03 px-09">
+        <option value="en" className="py-03 px-05 md:px-09">
           English
         </option>
-        <option value="nl" className="py-03 px-09">
+        <option value="nl" className="py-03 px-05 md:px-09">
           Nederlands
         </option>
       </select>

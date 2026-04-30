@@ -20,7 +20,7 @@ export default function ActionLink({
   onMouseEnter?: () => void
   className?: string
 }) {
-  const btnClass = `transition-colors ease-normal py-04 px-06 rounded-m cursor-pointer flex gap-03 font-normal items-center justify-center ${isCTA ? 'bg-brand text-cta hover:bg-brand-alt' : 'bg-layer2 text-neutral hover:bg-layer3'} ${className ?? ''} ${isTertiary ? 'bg-transparent font-mono text-2 hover:underline hover:bg-transparent' : ''}`
+  const btnClass = `transition-colors grow md:grow-0 ease-normal py-04 px-06 rounded-m cursor-pointer flex gap-03 font-normal items-center justify-center ${isCTA ? 'bg-brand text-cta hover:bg-brand-alt' : 'bg-layer2 text-neutral hover:bg-layer3'} ${className ?? ''} ${isTertiary ? 'bg-transparent font-mono text-2 hover:underline hover:bg-transparent' : ''}`
 
   if (isExternal) {
     return (

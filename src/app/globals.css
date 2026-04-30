@@ -3,6 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  --dialog-animation-duration: 300ms;
+  --dialog-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dialog-animation-easing-in: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dialog-animation-easing-out: cubic-bezier(0.25, 0.1, 0.25, 1);
   --brand: #fff41a;
   --brand-15: #fffbb2;
   --brand-25: #fff980;
@@ -50,10 +54,10 @@
   --brand-alt: #e5da00;
   --neutral: var(--grey-95);
   --soft: var(--grey-85);
-  --light: var(--grey-75);
+  --light: var(--grey-70);
   --cta-button: var(--grey-95);
   --layer1-backdrop: var(--color-grey-5-50);
-  --scrollbar: var(--grey-20);
+  --scrollbar: var(--grey-50);
 }
 .dark {
   --layer1: var(--grey-95);
@@ -66,7 +70,7 @@
   --light: var(--grey-25);
   --cta-button: var(--grey-95);
   --layer1-backdrop: var(--color-grey-95-50);
-  --scrollbar: var(--grey-80);
+  --scrollbar: var(--grey-40);
 }
 
 @theme inline {
@@ -147,6 +151,41 @@
   --font-weight-small: 400;
   --leading-small: var(--spacing-05);
 }
+
+@layer utilities {
+  .scrollbar-subtle {
+    &::-webkit-scrollbar {
+      width: var(--spacing-03);
+      height: var(--spacing-03);
+    }
+    &::-webkit-scrollbar-track {
+      border-right: var(--radius-xl);
+      background-color: var(--layer2);
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: var(--radius-xl);
+      background-color: var(--scrollbar);
+    }
+  }
+  .scrollbar-wide {
+    &::-webkit-scrollbar {
+      width: var(--spacing-04);
+      height: var(--spacing-04);
+      padding-left: var(--spacing-04);
+      border-top-right-radius: var(--radius-xl);
+      border-bottom-right-radius: var(--radius-xl);
+      background-color: var(--layer1);
+    }
+    &::-webkit-scrollbar-track {
+      border-top-right-radius: var(--radius-xl);
+      border-bottom-right-radius: var(--radius-xl);
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: var(--radius-xl);
+      background-color: var(--scrollbar);
+    }
+  }
+}
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -176,7 +215,6 @@ select:open::picker-icon {
   transform: rotateZ(135deg) translateY(-3px) translateX(3px);
 }
 select {
-  min-width: 22ch;
   &::picker-icon {
     content: '';
     display: inline-flex;
@@ -291,5 +329,56 @@ select {
   100% {
     opacity: 0;
     translate: 0 0;
+  }
+}
+dialog {
+  transition:
+    display var(--dialog-animation-duration) allow-discrete,
+    overlay var(--dialog-animation-duration) allow-discrete,
+    opacity var(--dialog-animation-duration) var(--dialog-animation-easing),
+    transform var(--dialog-animation-duration) var(--dialog-animation-easing);
+
+  opacity: 0;
+}
+
+dialog[open] {
+  opacity: 1;
+}
+
+dialog::backdrop {
+  transition:
+    display var(--dialog-animation-duration) allow-discrete,
+    overlay var(--dialog-animation-duration) allow-discrete,
+    background-color var(--dialog-animation-duration)
+      var(--dialog-animation-easing);
+
+  background-color: rgba(0, 0, 0, 0);
+}
+
+dialog[open]::backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+  }
+  dialog[open]::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+@media (width <= 34rem) {
+  dialog {
+    transform: translateY(100%);
+  }
+  dialog[open] {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  @starting-style {
+    dialog[open] {
+      opacity: 0;
+      transform: translateY(100%);
+    }
   }
 }

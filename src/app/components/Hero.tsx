@@ -26,7 +26,7 @@ export const Hero = ({
     animation: 'hand-wave 2000ms cubic-bezier(0.25, 0.1, 0.25, 1)',
   })
   return (
-    <div className="gap-09 flex items-center justify-center py-13">
+    <div className="gap-09 py-07 flex flex-col-reverse items-center justify-center md:flex-row md:py-13">
       <div className="gap-05 flex flex-col justify-center">
         <div className="gap-04 flex flex-col justify-center">
           <h1 className="leading-heading text-heading font-heading font-sans">

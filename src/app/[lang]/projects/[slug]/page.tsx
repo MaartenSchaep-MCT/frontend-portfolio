@@ -5,6 +5,7 @@ import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
 import ActionLink from '@/app/components/ActionLink'
+import Container from '@/app/components/Container'
 import Image from '@/app/components/Image'
 import Tag from '@/app/components/Tag'
 
@@ -103,37 +104,39 @@ export default async function Project({
     return <div>No Project Found (slug: {slug})</div>
   }
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 py-6 text-left">
-      <Image
-        src={project.thumbnail.src}
-        alt={project.title}
-        width={project.thumbnail.width!}
-        height={project.thumbnail.height!}
-        sizes="(max-width: 768px) 100vw, 768px"
-        className="rounded-l"
-      />
-      <h1 className="text-12 font-medium">{project.title}</h1>
-      <p>{project.description}</p>
-      <div className="flex gap-2">
-        {project.tags.map(tag => (
-          <Tag key={tag} text={tag} className="bg-layer2"></Tag>
-        ))}
-      </div>
+    <Container>
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 py-6 text-left">
+        <Image
+          src={project.thumbnail.src}
+          alt={project.title}
+          width={project.thumbnail.width!}
+          height={project.thumbnail.height!}
+          sizes="(max-width: 768px) 100vw, 768px"
+          className="rounded-l"
+        />
+        <h1 className="text-12 leading-09 font-medium">{project.title}</h1>
+        <p>{project.description}</p>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map(tag => (
+            <Tag key={tag} text={tag} className="bg-layer2"></Tag>
+          ))}
+        </div>
 
-      <div className="[&>article>p]:mb-6 [&>p]:leading-relaxed">
-        {Markdoc.renderers.react(project.renderable, React)}
+        <div className="[&>article>p]:mb-6 [&>p]:leading-relaxed">
+          {Markdoc.renderers.react(project.renderable, React)}
+        </div>
+        <div className="flex gap-4">
+          {project.links.map(link => (
+            <ActionLink
+              isCTA={link.isCta}
+              key={link.url}
+              href={link.url}
+              isExternal={true}
+              text={link.title}
+            />
+          ))}
+        </div>
       </div>
-      <div className="flex gap-4">
-        {project.links.map(link => (
-          <ActionLink
-            isCTA={link.isCta}
-            key={link.url}
-            href={link.url}
-            isExternal={true}
-            text={link.title}
-          />
-        ))}
-      </div>
-    </div>
+    </Container>
   )
 }
