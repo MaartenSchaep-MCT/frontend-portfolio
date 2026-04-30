@@ -74,7 +74,7 @@
   --font-mono: var(--font-google-sans-flex), monospace;
   --radius-s: 0.25rem;
   --radius-m: 0.5rem;
-  --radius-l: 0.75rem;
+  --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-round: 50%;
   --color-layer1: var(--layer1);
