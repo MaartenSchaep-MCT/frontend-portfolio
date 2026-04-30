@@ -10,7 +10,7 @@ import Image from '@/app/components/Image'
 import Tag from '@/app/components/Tag'
 
 import keystaticConfig from '../../../../../keystatic.config'
-import { getDictionary, hasLocale, locales } from '../../../dictionaries'
+import { locales } from '../../../dictionaries'
 
 if (typeof window === 'undefined') {
   const originalFetch = globalThis.fetch
