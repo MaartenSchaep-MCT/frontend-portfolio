@@ -12,7 +12,6 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-export const revalidate = false
 if (typeof window === 'undefined') {
   const originalFetch = globalThis.fetch
 
@@ -44,11 +43,9 @@ export async function generateStaticParams() {
   }))
 }
 async function getProjects(lang: string) {
-  // 'use cache'
-  // cacheLife('days')
-  // Check if token exists (don't log the whole thing for security, just the length)
-  console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
-  console.log('getProjects', reader)
+  'use cache'
+  cacheLife('weeks')
+
   const allProjects =
     lang === 'nl'
       ? await reader.collections.projectsNL.all()

@@ -64,8 +64,8 @@ export async function generateStaticParams() {
 }
 
 async function getProject(lang: string, slug: string) {
-  // 'use cache'
-  // cacheLife('days')
+  'use cache'
+  cacheLife('weeks')
   console.log('getting project from file system')
 
   const project =
