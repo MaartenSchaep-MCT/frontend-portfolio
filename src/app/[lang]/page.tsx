@@ -60,8 +60,8 @@ async function getProjects(lang: string) {
   })
 }
 async function getTechnologies(lang: string) {
-  // 'use cache'
-  // cacheLife('days')
+  'use cache'
+  cacheLife('weeks')
   console.log('--- Debugging GitHub Request TECHNOLOGIES ---')
   console.log(
     'Repo String:',
