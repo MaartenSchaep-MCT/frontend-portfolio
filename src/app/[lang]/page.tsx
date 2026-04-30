@@ -12,7 +12,7 @@ import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
 export const revalidate = false
-
+const BUILT_AT = new Date().toISOString()
 const reader = createReader(process.cwd(), {
   ...keystaticConfig,
   storage: { kind: 'local' },
@@ -103,6 +103,7 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
   console.log(projects)
   return (
     <Container>
+      <p>Built at: {BUILT_AT}</p>
       <div>Amount of projects: {projects.length}</div>
       <Hero dictionary={dictionary} lang={lang} />
 
