@@ -20,10 +20,4 @@
   "observability": {
     "enabled": true,
   },
-  "kv_namespaces": [
-    {
-      "binding": "NEXT_CACHE_WORKERS_KV",
-      "id": "7d6bb9640c154737a6da04b4c0afc2fa",
-    },
-  ],
 }
