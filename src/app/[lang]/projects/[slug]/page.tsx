@@ -11,13 +11,6 @@ import Tag from '@/app/components/Tag'
 import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
-// const reader =
-//   process.env.NODE_ENV === 'development'
-//     ? createReader(process.cwd(), keystaticConfig)
-//     : createGitHubReader(keystaticConfig, {
-//         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-//         token: process.env.KEYSTATIC_GITHUB_TOKEN,
-//       })
 if (typeof window === 'undefined') {
   const originalFetch = globalThis.fetch
 
@@ -65,7 +58,6 @@ export async function generateStaticParams() {
 async function getProject(lang: string, slug: string) {
   'use cache'
   cacheLife('weeks')
-  console.log('getting project from file system')
 
   const project =
     lang === 'nl'

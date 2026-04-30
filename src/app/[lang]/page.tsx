@@ -29,7 +29,7 @@ if (typeof window === 'undefined') {
     })
   }
 }
-const BUILT_AT = new Date().toISOString()
+
 const reader =
   process.env.NODE_ENV === 'development'
     ? createReader(process.cwd(), keystaticConfig)
@@ -37,6 +37,7 @@ const reader =
         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
         token: process.env.KEYSTATIC_GITHUB_TOKEN,
       })
+
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
@@ -50,7 +51,7 @@ async function getProjects(lang: string) {
     lang === 'nl'
       ? await reader.collections.projectsNL.all()
       : await reader.collections.projects.all()
-  console.log('projects read:', allProjects.length)
+
   return allProjects.map(project => {
     const { content, ...serializableEntry } = project.entry
     return {
@@ -62,14 +63,6 @@ async function getProjects(lang: string) {
 async function getTechnologies(lang: string) {
   'use cache'
   cacheLife('weeks')
-  console.log('--- Debugging GitHub Request TECHNOLOGIES ---')
-  console.log(
-    'Repo String:',
-    `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-  )
-  // Check if token exists (don't log the whole thing for security, just the length)
-  console.log('Token defined:', !!process.env.KEYSTATIC_GITHUB_TOKEN)
-  console.log('getTechnologies')
 
   const allTechnologies =
     lang === 'nl'
@@ -118,11 +111,8 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
   const projects = await getProjects(lang)
   const technologies = await getTechnologies(lang)
 
-  console.log(projects)
   return (
     <Container>
-      <p>Built at: {BUILT_AT}</p>
-      <div>Amount of projects: {projects.length}</div>
       <Hero dictionary={dictionary} lang={lang} />
 
       <div className="gap-09 flex flex-col">
