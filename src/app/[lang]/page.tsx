@@ -11,7 +11,6 @@ import ProjectCard from '../components/ProjectCard'
 import TechnologyCard from '../components/TechnologyCard'
 import { getDictionary, hasLocale, locales } from '../dictionaries'
 
-export const dynamic = 'force-static'
 export const revalidate = false
 
 const reader = createReader(process.cwd(), {
