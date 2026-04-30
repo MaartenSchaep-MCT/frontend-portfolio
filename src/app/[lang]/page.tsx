@@ -1,5 +1,3 @@
-import path from 'path'
-
 import React from 'react'
 import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
@@ -15,7 +13,8 @@ import { getDictionary, hasLocale, locales } from '../dictionaries'
 
 export const dynamic = 'force-static'
 export const revalidate = false
-const reader = createReader(path.join(process.cwd()), {
+
+const reader = createReader(process.cwd(), {
   ...keystaticConfig,
   storage: { kind: 'local' },
 })

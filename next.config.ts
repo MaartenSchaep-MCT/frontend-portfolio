@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  trailingSlash: true,
   reactCompiler: true,
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
 }
