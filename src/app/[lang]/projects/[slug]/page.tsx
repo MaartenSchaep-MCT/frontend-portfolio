@@ -11,7 +11,6 @@ import Tag from '@/app/components/Tag'
 import keystaticConfig from '../../../../../keystatic.config'
 import { getDictionary, hasLocale, locales } from '../../../dictionaries'
 
-export const revalidate = false
 // const reader =
 //   process.env.NODE_ENV === 'development'
 //     ? createReader(process.cwd(), keystaticConfig)
