@@ -29,8 +29,8 @@ export default function ProjectCard({
         sizes="(max-width: 768px) 300vw, 768px"
         className="rounded-l"
       />
-      <h3>{project.title}</h3>
-      <p>{project.description}</p>
+      <h3 className="text-large leading-07 font-heading">{project.title}</h3>
+      <p className="font-normal">{project.description}</p>
       <div className="gap-03 flex flex-wrap">
         {project.tags.map(tag => (
           <Tag key={tag} text={tag} />

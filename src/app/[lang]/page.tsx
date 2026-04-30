@@ -136,7 +136,7 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
           <h2 className="text-7 leading-07 font-medium">
             {dictionary.projects.projects}
           </h2>
-          <div className="grid grid-cols-2" id="projects">
+          <div className="gap-06 grid grid-cols-2" id="projects">
             {projects.map(project => (
               <ProjectCard
                 key={project.slug}
