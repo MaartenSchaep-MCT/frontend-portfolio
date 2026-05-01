@@ -1,6 +1,9 @@
 import { getCldImageUrl } from 'next-cloudinary'
+import { cacheLife } from 'next/cache'
 
 export async function fetchBlurUrl(src: string): Promise<string | undefined> {
+  'use cache'
+  cacheLife('days')
   try {
     const imageUrl = getCldImageUrl({
       src: src,
