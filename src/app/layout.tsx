@@ -7,12 +7,14 @@ const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
   subsets: ['latin'],
   adjustFontFallback: false,
+  fallback: ['sans-serif'],
 })
 
 const googleSansFlex = Google_Sans_Flex({
   variable: '--font-google-sans-flex',
   subsets: ['latin'],
   adjustFontFallback: false,
+  fallback: ['monospace'],
 })
 
 export const metadata: Metadata = {
