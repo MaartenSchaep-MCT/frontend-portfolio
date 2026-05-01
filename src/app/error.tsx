@@ -15,7 +15,7 @@ export default function Error({
     console.error(error)
   }, [error])
   return (
-    <div className="gap-07 grid min-h-dvh place-content-center justify-center">
+    <div className="gap-07 p-05 grid min-h-dvh place-content-center justify-center">
       <h2 className="text-heading font-mono">Something went wrong!</h2>
       <div className="gap-05 m-auto flex flex-col">
         <button

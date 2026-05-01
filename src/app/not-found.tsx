@@ -2,7 +2,7 @@ import ActionLink from '@/components/ActionLink'
 
 export default function NotFound() {
   return (
-    <div className="gap-07 grid min-h-dvh place-content-center text-center">
+    <div className="gap-07 p-05 grid min-h-dvh place-content-center text-center">
       <h1 className="text-heading font-heading leading-heading font-mono">
         404 Not Found
       </h1>

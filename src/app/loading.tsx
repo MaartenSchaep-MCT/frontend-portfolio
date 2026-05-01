@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="gap-07 grid min-h-dvh place-content-center">
+    <div className="gap-07 p-05 grid min-h-dvh place-content-center">
       <div className="flex justify-center">
         <svg
           aria-hidden="true"
