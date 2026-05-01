@@ -22,7 +22,7 @@ export async function getProjects(lang: string): Promise<ProjectWithSlug[]> {
   'use cache'
   // weeks is fine since app will be rebuilt when there is new content
   cacheLife('weeks')
-  cacheTag('projects')
+  // cacheTag('projects')
   try {
     const allProjects =
       lang === 'nl'
@@ -69,7 +69,7 @@ export async function getProject(
   // weeks is fine since app will be rebuilt when there is new content
 
   cacheLife('weeks')
-  cacheTag('project')
+  // cacheTag('project')
 
   try {
     const project =
@@ -105,7 +105,7 @@ export async function getTechnologies(
   // weeks is fine since app will be rebuilt when there is new content
 
   cacheLife('weeks')
-  cacheTag('technologies')
+  // cacheTag('technologies')
   try {
     const allTechnologies =
       lang === 'nl'
