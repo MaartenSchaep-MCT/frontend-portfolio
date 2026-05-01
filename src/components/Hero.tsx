@@ -19,7 +19,7 @@ export const Hero = async ({
     console.error(e)
   }
   return (
-    <div className="gap-09 py-07 flex flex-col-reverse items-center justify-center md:flex-row md:py-13">
+    <section className="gap-09 py-07 flex flex-col-reverse items-center justify-center md:flex-row md:py-13">
       <div className="gap-05 flex flex-col justify-center">
         <div className="gap-04 flex flex-col justify-center">
           <Title element="h1" level="headline">
@@ -38,6 +38,6 @@ export const Hero = async ({
         </div>
       </div>
       <AnimatedWaveImage blurUrl={blurUrl} />
-    </div>
+    </section>
   )
 }
