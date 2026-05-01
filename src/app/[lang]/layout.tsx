@@ -19,7 +19,7 @@ export default async function Layout({
   return (
     <>
       <NavBar lang={lang} />
-      <main className="flex-1">{children}</main>
+      <main className="flex flex-1">{children}</main>
       <Footer />
     </>
   )

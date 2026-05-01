@@ -3,7 +3,7 @@
 import Image from '@/components/Image'
 import useBoop from '@/hooks/use-boop'
 
-export default function AnimatedWaveImage() {
+export default function AnimatedWaveImage({ blurUrl }: { blurUrl?: string }) {
   const [waveStyle, waveTrigger] = useBoop({
     timing: 2000,
     animation: 'hand-wave 2000ms cubic-bezier(0.25, 0.1, 0.25, 1)',
@@ -21,7 +21,9 @@ export default function AnimatedWaveImage() {
         height={240}
         sizes="(max-width: 768px) 100vw, 768px"
         loading="eager"
+        preload={true}
         fetchPriority="high"
+        blurUrl={blurUrl}
       />
       <svg
         xmlns="http://www.w3.org/2000/svg"

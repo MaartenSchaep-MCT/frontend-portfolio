@@ -1,9 +1,12 @@
 import React from 'react'
+import { notFound } from 'next/navigation'
 import Markdoc from '@markdoc/markdoc'
 
+import ActionLink from '@/components/ActionLink'
 import ProjectDetail from '@/components/ProjectDetail'
 import { getAllProjectParams, getProject } from '@/lib/data'
-import { locales } from '@/lib/dictionaries'
+import { getDictionary, hasLocale, locales } from '@/lib/dictionaries'
+import { fetchBlurUrl } from '@/lib/fetch-blur-url'
 import { setupFetchWithUserAgent } from '@/lib/fetch-setup'
 
 setupFetchWithUserAgent()
@@ -18,18 +21,46 @@ export default async function Project({
   params: Promise<{ lang: string; slug: string }>
 }) {
   const { lang, slug } = await params
+  if (!hasLocale(lang)) {
+    notFound()
+  }
+
+  const dictionary = await getDictionary(lang)
   const project = await getProject(lang, slug)
   if (!project) {
-    return <div className="m-auto w-full">No Project Found (slug: {slug})</div>
+    return (
+      <div className="gap-05 m-auto flex h-full min-h-full w-full grow flex-col text-center">
+        {dictionary.projects.notFound}
+        <ActionLink
+          text="Back to Home"
+          href={`/${lang}`}
+          isCTA={false}
+          isExternal={false}
+          className="w-fit self-center justify-self-center"
+        />
+      </div>
+    )
+  }
+  let blurUrl: string | undefined
+  try {
+    blurUrl = await fetchBlurUrl(project.thumbnail.src)
+  } catch (e) {
+    console.error(e)
   }
   return (
     <ProjectDetail>
-      <ProjectDetail.Image
-        src={project.thumbnail.src}
-        alt={project.title}
-        width={project.thumbnail.width!}
-        height={project.thumbnail.height!}
-      />
+      {project.thumbnail?.src ? (
+        <ProjectDetail.Image
+          src={project.thumbnail.src}
+          alt={project.thumbnail.alt ? project.thumbnail.alt : project.title}
+          width={project.thumbnail.width ?? 0}
+          height={project.thumbnail.height ?? 0}
+          preload={true}
+          loading="eager"
+          fetchPriority="high"
+          blurUrl={blurUrl}
+        />
+      ) : null}
       <ProjectDetail.Title>{project.title}</ProjectDetail.Title>
       <ProjectDetail.Description>
         {project.description}

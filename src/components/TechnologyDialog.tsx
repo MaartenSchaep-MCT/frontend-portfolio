@@ -81,10 +81,14 @@ export const TechnologyDialog = ({
           </form>
         </div>
         <div className="pt-05 gap-03 flex flex-col">
-          <Title level="subheadline" element="h3">
-            {dictionary.technologies.myExperience}
-          </Title>
-          {children}
+          {children ? (
+            <>
+              <Title level="subheadline" element="h3">
+                {dictionary.technologies.myExperience}
+              </Title>
+              {children}
+            </>
+          ) : null}
         </div>
         {technology.projects.length > 0 ? (
           <div className="pt-05 gap-03 flex flex-col">

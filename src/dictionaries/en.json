@@ -8,10 +8,13 @@
   "technologies": {
     "technologies": "Technologies",
     "myExperience": "My experience",
-    "featuredProjects": "Featured projects"
+    "featuredProjects": "Featured projects",
+    "noTechnologies": "There are currently no technologies available, check back later."
   },
   "projects": {
     "projects": "Projects",
-    "viewProject": "View Project"
+    "viewProject": "View Project",
+    "noProjects": "There are currently no projects, check back later.",
+    "notFound": "Project not found"
   }
 }

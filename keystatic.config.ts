@@ -20,16 +20,25 @@ export default config({
       path: 'src/content/projects/en/*',
       format: { contentField: 'content' },
       schema: {
-        title: fields.slug({ name: { label: 'Title' } }),
-        description: fields.text({ label: 'Description' }),
-        thumbnail: fields.cloudImage({
-          label: 'Thumbnail',
+        title: fields.slug({
+          name: { label: 'Title', validation: { isRequired: true } },
+        }),
+        description: fields.text({
+          label: 'Description',
           validation: { isRequired: true },
         }),
-        tags: fields.array(fields.text({ label: 'Tag' }), {
-          label: 'Tag',
-          itemLabel: props => props.value,
+        thumbnail: fields.cloudImage({
+          label: 'Thumbnail',
+
+          validation: { isRequired: true },
         }),
+        tags: fields.array(
+          fields.text({ label: 'Tag', validation: { isRequired: true } }),
+          {
+            label: 'Tag',
+            itemLabel: props => props.value,
+          },
+        ),
         links: fields.array(
           fields.object({
             title: fields.text({
@@ -55,16 +64,24 @@ export default config({
       path: 'src/content/projects/nl/*',
       format: { contentField: 'content' },
       schema: {
-        title: fields.slug({ name: { label: 'Title' } }),
-        description: fields.text({ label: 'Description' }),
+        title: fields.slug({
+          name: { label: 'Title', validation: { isRequired: true } },
+        }),
+        description: fields.text({
+          label: 'Description',
+          validation: { isRequired: true },
+        }),
         thumbnail: fields.cloudImage({
           label: 'Thumbnail',
           validation: { isRequired: true },
         }),
-        tags: fields.array(fields.text({ label: 'Tag' }), {
-          label: 'Tag',
-          itemLabel: props => props.value,
-        }),
+        tags: fields.array(
+          fields.text({ label: 'Tag', validation: { isRequired: true } }),
+          {
+            label: 'Tag',
+            itemLabel: props => props.value,
+          },
+        ),
         links: fields.array(
           fields.object({
             title: fields.text({
@@ -90,8 +107,13 @@ export default config({
       path: 'src/content/technologies/en/*',
       format: { contentField: 'experience' },
       schema: {
-        title: fields.slug({ name: { label: 'Title' } }),
-        description: fields.text({ label: 'Description' }),
+        title: fields.slug({
+          name: { label: 'Title', validation: { isRequired: true } },
+        }),
+        description: fields.text({
+          label: 'Description',
+          validation: { isRequired: true },
+        }),
         icon: fields.image({
           label: 'Icon',
           directory: 'public/images/technologies',
@@ -118,8 +140,13 @@ export default config({
       path: 'src/content/technologies/nl/*',
       format: { contentField: 'experience' },
       schema: {
-        title: fields.slug({ name: { label: 'Title' } }),
-        description: fields.text({ label: 'Description' }),
+        title: fields.slug({
+          name: { label: 'Title', validation: { isRequired: true } },
+        }),
+        description: fields.text({
+          label: 'Description',
+          validation: { isRequired: true },
+        }),
         icon: fields.image({
           label: 'Icon',
           directory: 'public/images/technologies',

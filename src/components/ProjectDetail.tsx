@@ -22,11 +22,19 @@ const ProjectImage = ({
   alt,
   width,
   height,
+  loading,
+  fetchPriority,
+  preload,
+  blurUrl,
 }: {
   src: string
   alt: string
   width: number
   height: number
+  loading: 'lazy' | 'eager'
+  fetchPriority: 'high' | 'low'
+  preload: boolean
+  blurUrl?: string
 }) => {
   return (
     <Image
@@ -36,6 +44,10 @@ const ProjectImage = ({
       height={height}
       sizes="(max-width: 768px) 100vw, 768px"
       className="rounded-l"
+      loading={loading}
+      fetchPriority={fetchPriority}
+      preload={preload}
+      blurUrl={blurUrl}
     />
   )
 }

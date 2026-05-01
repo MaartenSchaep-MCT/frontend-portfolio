@@ -18,15 +18,18 @@ export default function ProjectCard({
 }) {
   return (
     <div className="bg-layer2 p-06 gap-05 flex flex-col rounded-xl">
-      <Image
-        format="webp"
-        src={project.thumbnail.src}
-        alt={project.title}
-        width={project.thumbnail.width!}
-        height={project.thumbnail.height!}
-        sizes="(max-width: 768px) 300vw, 768px"
-        className="rounded-m"
-      />
+      <div className="relative aspect-video">
+        <Image
+          format="webp"
+          src={project.thumbnail.src}
+          alt={project.thumbnail.alt ? project.thumbnail.alt : project.title}
+          width={project.thumbnail.width ?? 0}
+          height={project.thumbnail.height ?? 0}
+          fill
+          sizes="(max-width: 768px) 300vw, 768px"
+          className="rounded-m object-cover"
+        />
+      </div>
       <div className="grow">
         <h3 className="text-large leading-07 font-heading">{project.title}</h3>
         <p className="font-normal">{project.description}</p>

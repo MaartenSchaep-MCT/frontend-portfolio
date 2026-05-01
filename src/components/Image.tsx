@@ -14,6 +14,9 @@ export default function Image({
   className,
   loading,
   fetchPriority,
+  preload,
+  fill,
+  blurUrl,
 }: {
   src: string
   alt: string
@@ -25,6 +28,9 @@ export default function Image({
   className?: string
   loading?: 'eager' | 'lazy'
   fetchPriority?: 'high' | 'low'
+  preload?: boolean
+  fill?: boolean
+  blurUrl?: string
 }) {
   return (
     <CldImage
@@ -32,12 +38,16 @@ export default function Image({
       onMouseEnter={onMouseEnter}
       src={src}
       alt={alt}
-      width={width}
-      height={height}
+      fill={fill}
+      width={fill ? undefined : width}
+      height={fill ? undefined : height}
       sizes={sizes}
       className={className}
       loading={loading}
       fetchPriority={fetchPriority}
+      preload={preload}
+      placeholder={blurUrl ? 'blur' : undefined}
+      blurDataURL={blurUrl}
     />
   )
 }

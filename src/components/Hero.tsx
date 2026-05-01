@@ -3,14 +3,21 @@ import AnimatedSeeProjectsAction from '@/components/AnimatedActionLinks/Animated
 import AnimatedWaveImage from '@/components/AnimatedWaveImage'
 import Title from '@/components/Title'
 import type { Dictionary } from '@/lib/dictionaries'
+import { fetchBlurUrl } from '@/lib/fetch-blur-url'
 
-export const Hero = ({
+export const Hero = async ({
   dictionary,
   lang,
 }: {
   dictionary: Dictionary
   lang: string
 }) => {
+  let blurUrl: string | undefined
+  try {
+    blurUrl = await fetchBlurUrl('maarten_yxeq4r')
+  } catch (e) {
+    console.error(e)
+  }
   return (
     <div className="gap-09 py-07 flex flex-col-reverse items-center justify-center md:flex-row md:py-13">
       <div className="gap-05 flex flex-col justify-center">
@@ -30,7 +37,7 @@ export const Hero = ({
           <AnimatedSeeProjectsAction text={dictionary.hero.seeProjects} />
         </div>
       </div>
-      <AnimatedWaveImage />
+      <AnimatedWaveImage blurUrl={blurUrl} />
     </div>
   )
 }
