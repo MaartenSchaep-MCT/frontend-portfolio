@@ -26,7 +26,7 @@ export default function ProjectCard({
           width={project.thumbnail.width ?? 0}
           height={project.thumbnail.height ?? 0}
           fill
-          sizes="(max-width: 768px) 300vw, 768px"
+          sizes="(max-width: 768px) 100vw, max-width(1024px) 50vw, 40rem"
           className="rounded-m object-cover"
         />
       </div>

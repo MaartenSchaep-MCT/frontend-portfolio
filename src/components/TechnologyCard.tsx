@@ -31,6 +31,7 @@ export default function TechnologyCard({
           alt={technology.title}
           width={32}
           height={32}
+          quality={100}
         />
         <div className="flex flex-col">
           <h2>{technology.title}</h2>

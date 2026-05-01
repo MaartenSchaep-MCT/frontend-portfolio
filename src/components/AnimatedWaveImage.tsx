@@ -19,7 +19,7 @@ export default function AnimatedWaveImage({ blurUrl }: { blurUrl?: string }) {
         alt="Profile picture of Maarten"
         width={240}
         height={240}
-        sizes="(max-width: 768px) 100vw, 768px"
+        sizes="240px"
         loading="eager"
         preload={true}
         fetchPriority="high"
