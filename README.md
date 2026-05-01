@@ -20,6 +20,10 @@ bun dev
 
 ## Project Info
 
+### Lighthouse report:
+
+https://pagespeed.web.dev/analysis/https-portfolio-maartenschaep-com-en/3xxh7yxmng?form_factor=mobile
+
 ### loading.tsx
 
 I have consciously not used loading.tsx since that didn't work when deploying on Cloudflare Workers.
