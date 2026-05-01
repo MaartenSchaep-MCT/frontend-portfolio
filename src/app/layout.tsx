@@ -6,11 +6,13 @@ import './globals.css'
 const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
   subsets: ['latin'],
+  adjustFontFallback: false,
 })
 
 const googleSansFlex = Google_Sans_Flex({
   variable: '--font-google-sans-flex',
   subsets: ['latin'],
+  adjustFontFallback: false,
 })
 
 export const metadata: Metadata = {
