@@ -26,10 +26,13 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
 
   return (
     <label
+      htmlFor="language-select"
       className="gap-05 relative flex items-center"
       onMouseEnter={globeTrigger}
     >
+      <span className="sr-only">Select language / Kies taal</span>
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -50,6 +53,7 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
         onChange={handleChange}
         value={defaultLang}
         name="language-select"
+        id="language-select"
         className="hover:bg-layer3 ease-normal min-h-08 py-03 pe-05 ps-09 rounded-m bg-layer2 text-2 gap-05 text-neutral leading-05 flex w-full cursor-pointer items-center overflow-visible border-none font-sans font-normal transition-colors md:min-w-[22ch]"
       >
         <option value="en" className="py-03 px-05 md:px-09">
