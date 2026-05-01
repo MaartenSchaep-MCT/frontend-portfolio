@@ -2,8 +2,15 @@ import Link from 'next/link'
 
 import { LanguageSelect } from '@/components/LanguageSelect'
 import ThemeToggle from '@/components/ThemeToggle'
+import { Dictionary } from '@/lib/dictionaries'
 
-export default async function Navbar({ lang }: { lang: string }) {
+export default async function Navbar({
+  lang,
+  dictionary,
+}: {
+  lang: string
+  dictionary: Dictionary
+}) {
   return (
     <nav className="px-05 md:px-09 py-06 gap-05 flex flex-wrap items-center justify-between">
       <Link
@@ -13,7 +20,10 @@ export default async function Navbar({ lang }: { lang: string }) {
         Home
       </Link>
       <div className="gap-05 flex items-center justify-center">
-        <LanguageSelect defaultLang={lang}></LanguageSelect>
+        <LanguageSelect
+          defaultLang={lang}
+          dictionary={dictionary}
+        ></LanguageSelect>
         <ThemeToggle></ThemeToggle>
       </div>
     </nav>

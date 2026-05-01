@@ -25,6 +25,7 @@ export default function TechnologyCard({
       <button
         onClick={() => setIsDialogOpen(true)}
         className="gap-05 bg-layer2 py-04 px-06 rounded-m hover:bg-layer3 ease-normal flex cursor-pointer items-center text-left transition-colors"
+        aria-label={`${dictionary.technologies.openTechnologyDialog} ${technology.title}`}
       >
         <Image
           src={technology.icon}

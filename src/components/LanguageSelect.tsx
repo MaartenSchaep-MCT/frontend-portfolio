@@ -3,8 +3,15 @@
 import { usePathname, useRouter } from 'next/navigation'
 
 import useBoop from '@/hooks/use-boop'
+import { Dictionary } from '@/lib/dictionaries'
 
-export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
+export const LanguageSelect = ({
+  defaultLang,
+  dictionary,
+}: {
+  defaultLang: string
+  dictionary: Dictionary
+}) => {
   const router = useRouter()
   const pathname = usePathname()
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,7 +37,7 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
       className="gap-05 relative flex items-center"
       onMouseEnter={globeTrigger}
     >
-      <span className="sr-only">Select language / Kies taal</span>
+      <span className="sr-only">{dictionary.general.selectLanguage}</span>
       <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +63,10 @@ export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
         id="language-select"
         className="hover:bg-layer3 ease-normal min-h-08 py-03 pe-05 ps-09 rounded-m bg-layer2 text-2 gap-05 text-neutral leading-05 flex w-full cursor-pointer items-center overflow-visible border-none font-sans font-normal transition-colors md:min-w-[22ch]"
       >
-        <option value="en" className="py-03 px-05 md:px-09">
+        <option value="en" className="py-03 px-05 md:px-09" lang="en">
           English
         </option>
-        <option value="nl" className="py-03 px-05 md:px-09">
+        <option value="nl" className="py-03 px-05 md:px-09" lang="nl">
           Nederlands
         </option>
       </select>

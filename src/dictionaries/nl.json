@@ -9,12 +9,16 @@
     "technologies": "Technologieën",
     "myExperience": "Mijn ervaring",
     "featuredProjects": "Uitgelichte projecten",
-    "noTechnologies": "Er zijn momenteel geen technologieën beschikbaar, kom later nog eens terug."
+    "noTechnologies": "Er zijn momenteel geen technologieën beschikbaar, kom later nog eens terug.",
+    "openTechnologyDialog": "Open technologie detail dialoog van"
   },
   "projects": {
     "projects": "Projecten",
     "viewProject": "Project bekijken",
     "noProjects": "Er zijn momenteel geen projecten beschikbaar, kom later nog eens terug.",
     "notFound": "Project niet gevonden"
+  },
+  "general": {
+    "selectLanguage": "Kies taal"
   }
 }

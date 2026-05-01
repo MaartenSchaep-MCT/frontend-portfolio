@@ -9,12 +9,16 @@
     "technologies": "Technologies",
     "myExperience": "My experience",
     "featuredProjects": "Featured projects",
-    "noTechnologies": "There are currently no technologies available, check back later."
+    "noTechnologies": "There are currently no technologies available, check back later.",
+    "openTechnologyDialog": "Open technology detail dialog of"
   },
   "projects": {
     "projects": "Projects",
     "viewProject": "View Project",
     "noProjects": "There are currently no projects, check back later.",
     "notFound": "Project not found"
+  },
+  "general": {
+    "selectLanguage": "Select language"
   }
 }
