@@ -3,8 +3,6 @@ import { Google_Sans_Code, Google_Sans_Flex } from 'next/font/google'
 
 import './globals.css'
 
-import Script from 'next/script'
-
 const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
   subsets: ['latin'],

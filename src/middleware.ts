@@ -1,3 +1,4 @@
+// Middleware instead of newer Proxy since Proxy gave issues in Cloudflare (Proxy is only Node runtime)
 import { NextRequest, NextResponse } from 'next/server'
 import { match } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'

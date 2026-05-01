@@ -8,6 +8,7 @@ import ActionLink from '@/app/components/ActionLink'
 import Container from '@/app/components/Container'
 import Image from '@/app/components/Image'
 import Tag from '@/app/components/Tag'
+import Title from '@/app/components/Title'
 
 import keystaticConfig from '../../../../../keystatic.config'
 import { locales } from '../../../dictionaries'
@@ -114,7 +115,9 @@ export default async function Project({
           sizes="(max-width: 768px) 100vw, 768px"
           className="rounded-l"
         />
-        <h1 className="text-12 leading-09 font-medium">{project.title}</h1>
+        <Title element="h1" level="headline">
+          {project.title}
+        </Title>
         <p>{project.description}</p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map(tag => (

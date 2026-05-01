@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Dictionary } from '../dictionaries'
 import { Technology } from '../types/technology'
 import ProjectCard from './ProjectCard'
+import Title from './Title'
 
 export const TechnologyDialog = ({
   technology,
@@ -79,16 +80,16 @@ export const TechnologyDialog = ({
           </form>
         </div>
         <div className="pt-05 gap-03 flex flex-col">
-          <h3 className="text-5 leading-07 font-semibold">
+          <Title level="subheadline" element="h3">
             {dictionary.technologies.myExperience}
-          </h3>
+          </Title>
           {children}
         </div>
         {technology.projects.length > 0 ? (
           <div className="pt-05 gap-03 flex flex-col">
-            <h3 className="text-5 leading-07 font-semibold">
+            <Title level="subheadline" element="h3">
               {dictionary.technologies.featuredProjects}
-            </h3>
+            </Title>
             <div className="gap-06 grid grid-cols-1 md:grid-cols-3">
               {technology.projects.map(project => (
                 <ProjectCard

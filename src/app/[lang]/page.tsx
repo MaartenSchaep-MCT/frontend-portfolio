@@ -5,6 +5,8 @@ import { createReader } from '@keystatic/core/reader'
 import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
+import Title from '@/app/components/Title'
+
 import keystaticConfig from '../../../keystatic.config'
 import Container from '../components/Container'
 import { Hero } from '../components/Hero'
@@ -104,7 +106,6 @@ async function getTechnologies(lang: string) {
 }
 export default async function Page({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params
-
   if (!hasLocale(lang)) {
     notFound()
   }
@@ -116,12 +117,11 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
   return (
     <Container>
       <Hero dictionary={dictionary} lang={lang} />
-
       <div className="gap-09 flex flex-col">
         <section className="gap-05 flex flex-col">
-          <h2 className="text-7 leading-07 font-medium">
+          <Title element="h2" level="headline-small">
             {dictionary.technologies.technologies}
-          </h2>
+          </Title>
           <div className="gap-06 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {technologies.map(technology => (
               <TechnologyCard
@@ -136,9 +136,9 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
           </div>
         </section>
         <section className="gap-05 flex flex-col">
-          <h2 className="text-7 leading-07 font-medium">
+          <Title element="h2" level="headline-small">
             {dictionary.projects.projects}
-          </h2>
+          </Title>
           <div className="gap-06 grid grid-cols-1 md:grid-cols-2" id="projects">
             {projects.map(project => (
               <ProjectCard

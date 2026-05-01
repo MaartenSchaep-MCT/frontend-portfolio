@@ -1,6 +1,6 @@
 'use client'
 
-//use client because of mouseEnter
+//use client because of mouseEnter and because CldImage is a client component
 import { CldImage } from 'next-cloudinary'
 
 export default function Image({
@@ -9,7 +9,7 @@ export default function Image({
   width,
   height,
   format,
-  onMouseEnter,
+  onMouseEnterAction: onMouseEnter,
   sizes,
   className,
   loading,
@@ -20,7 +20,7 @@ export default function Image({
   width: number
   height: number
   format?: string
-  onMouseEnter?: () => void
+  onMouseEnterAction?: () => void
   sizes?: string
   className?: string
   loading?: 'eager' | 'lazy'

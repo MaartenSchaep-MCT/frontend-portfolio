@@ -370,6 +370,10 @@ select {
     transform: scaleY(1);
   }
 }
+html:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
 
 dialog {
   transition:
