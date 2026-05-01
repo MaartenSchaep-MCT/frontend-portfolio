@@ -1,13 +1,32 @@
 import { getCldImageUrl } from 'next-cloudinary'
 
-export async function fetchBlurUrl(src: string): Promise<string> {
-  const imageUrl = getCldImageUrl({
-    src: src,
-    width: 100,
-  })
-  const response = await fetch(imageUrl)
-  const arrayBuffer = await response.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
-  const base64 = buffer.toString('base64')
-  return `data:${response.type};base64,${base64}`
+export async function fetchBlurUrl(src: string): Promise<string | undefined> {
+  try {
+    const imageUrl = getCldImageUrl({
+      src: src,
+      width: 100,
+      quality: 'low',
+      effects: [{ blur: '1000' }],
+    })
+
+    const response = await fetch(imageUrl)
+    const arrayBuffer = await response.arrayBuffer()
+
+    const bytes = new Uint8Array(arrayBuffer)
+    let binary = ''
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i])
+    }
+    const base64 = btoa(binary)
+
+    const mimeType = response.headers.get('content-type') || 'image/jpeg'
+
+    return `data:${mimeType};base64,${base64}`
+  } catch (error) {
+    if (error instanceof Error) {
+      return undefined
+    }
+    console.error('Failed to fetch blur URL:', error)
+    return undefined
+  }
 }
