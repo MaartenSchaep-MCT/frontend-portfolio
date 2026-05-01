@@ -1,109 +1,24 @@
 import React from 'react'
-import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
-import { createReader } from '@keystatic/core/reader'
-import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
-import Title from '@/app/components/Title'
+import Container from '@/components/Container'
+import { Hero } from '@/components/Hero'
+import ProjectCard from '@/components/ProjectCard'
+import Section from '@/components/Section'
+import TechnologyCard from '@/components/TechnologyCard'
+import { getProjects, getTechnologies } from '@/lib/data'
+import { getDictionary, hasLocale, locales } from '@/lib/dictionaries'
+import { setupFetchWithUserAgent } from '@/lib/fetch-setup'
 
-import keystaticConfig from '../../../keystatic.config'
-import Container from '../components/Container'
-import { Hero } from '../components/Hero'
-import ProjectCard from '../components/ProjectCard'
-import TechnologyCard from '../components/TechnologyCard'
-import { getDictionary, hasLocale, locales } from '../dictionaries'
-
-if (typeof window === 'undefined') {
-  const originalFetch = globalThis.fetch
-
-  globalThis.fetch = (url, init) => {
-    const headers = new Headers(init?.headers)
-
-    // GitHub API requires a User-Agent. Cloudflare doesn't always provide one.
-    if (!headers.has('User-Agent')) {
-      headers.set('User-Agent', 'Keystatic-App/1.0.0')
-    }
-
-    return originalFetch(url, {
-      ...init,
-      headers,
-    })
-  }
-}
-
-const reader =
-  process.env.NODE_ENV === 'development'
-    ? createReader(process.cwd(), keystaticConfig)
-    : createGitHubReader(keystaticConfig, {
-        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-        token: process.env.KEYSTATIC_GITHUB_TOKEN,
-      })
+setupFetchWithUserAgent()
 
 export async function generateStaticParams() {
   return locales.map(locale => ({
     lang: locale,
   }))
 }
-async function getProjects(lang: string) {
-  'use cache'
-  cacheLife('weeks')
 
-  const allProjects =
-    lang === 'nl'
-      ? await reader.collections.projectsNL.all()
-      : await reader.collections.projects.all()
-
-  return allProjects.map(project => {
-    const { content, ...serializableEntry } = project.entry
-    return {
-      slug: project.slug,
-      entry: serializableEntry,
-    }
-  })
-}
-async function getTechnologies(lang: string) {
-  'use cache'
-  cacheLife('weeks')
-
-  const allTechnologies =
-    lang === 'nl'
-      ? await reader.collections.technologiesNL.all()
-      : await reader.collections.technologies.all()
-
-  const allProjects =
-    lang === 'nl'
-      ? await reader.collections.projectsNL.all()
-      : await reader.collections.projects.all()
-
-  return Promise.all(
-    allTechnologies.map(async technology => {
-      const { experience, projects, ...serializableEntry } = technology.entry
-      const { node } = await technology.entry.experience()
-
-      const renderable = Markdoc.transform(node)
-
-      const populatedProjects = (projects || [])
-        .map(projectSlug => {
-          const project = allProjects.find(p => p.slug === projectSlug)
-          if (!project) return null
-          const { content, ...serializableProjectEntry } = project.entry
-          return {
-            slug: project.slug,
-            ...serializableProjectEntry,
-          }
-        })
-        .filter((p): p is NonNullable<typeof p> => p !== null)
-
-      return {
-        slug: technology.slug,
-        ...serializableEntry,
-        projects: populatedProjects,
-        renderedExperience: JSON.parse(JSON.stringify(renderable)),
-      }
-    }),
-  )
-}
 export default async function Page({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params
   if (!hasLocale(lang)) {
@@ -118,11 +33,9 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
     <Container>
       <Hero dictionary={dictionary} lang={lang} />
       <div className="gap-09 flex flex-col">
-        <section className="gap-05 flex flex-col">
-          <Title element="h2" level="headline-small">
-            {dictionary.technologies.technologies}
-          </Title>
-          <div className="gap-06 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <Section>
+          <Section.Title>{dictionary.technologies.technologies}</Section.Title>
+          <Section.Grid cols={1} colsLarge={4}>
             {technologies.map(technology => (
               <TechnologyCard
                 dictionary={dictionary}
@@ -133,13 +46,11 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
                 {Markdoc.renderers.react(technology.renderedExperience, React)}
               </TechnologyCard>
             ))}
-          </div>
-        </section>
-        <section className="gap-05 flex flex-col">
-          <Title element="h2" level="headline-small">
-            {dictionary.projects.projects}
-          </Title>
-          <div className="gap-06 grid grid-cols-1 md:grid-cols-2" id="projects">
+          </Section.Grid>
+        </Section>
+        <Section>
+          <Section.Title>{dictionary.projects.projects}</Section.Title>
+          <Section.Grid id="projects" cols={1} colsMedium={2} colsLarge={2}>
             {projects.map(project => (
               <ProjectCard
                 key={project.slug}
@@ -149,8 +60,8 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
                 dictionary={dictionary}
               />
             ))}
-          </div>
-        </section>
+          </Section.Grid>
+        </Section>
       </div>
     </Container>
   )

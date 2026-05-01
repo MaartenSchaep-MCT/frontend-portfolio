@@ -1,5 +1,5 @@
-import AnimatedLinkedInAction from './AnimatedActionLinks/AnimatedLinkedInAction'
-import AnimatedMailAction from './AnimatedActionLinks/AnimatedMailAction'
+import AnimatedLinkedInAction from '@/components/AnimatedActionLinks/AnimatedLinkedInAction'
+import AnimatedMailAction from '@/components/AnimatedActionLinks/AnimatedMailAction'
 
 export default function Footer() {
   return (

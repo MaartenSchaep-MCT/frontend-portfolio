@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 
-import { Dictionary } from '../dictionaries'
-import { Technology } from '../types/technology'
+import { Technology } from '@/interfaces/technology'
+import { Dictionary } from '@/lib/dictionaries'
+
 import ProjectCard from './ProjectCard'
 import Title from './Title'
 

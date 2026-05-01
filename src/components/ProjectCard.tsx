@@ -1,7 +1,8 @@
 import { Entry } from '@keystatic/core/reader'
 
-import config from '../../../keystatic.config'
-import type { Dictionary } from '../dictionaries'
+import type { Dictionary } from '@/lib/dictionaries'
+
+import config from '../../keystatic.config'
 import ActionLink from './ActionLink'
 import Image from './Image'
 import Tag from './Tag'

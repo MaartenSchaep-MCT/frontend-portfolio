@@ -1,97 +1,15 @@
 import React from 'react'
-import { cacheLife } from 'next/cache'
-import { createReader } from '@keystatic/core/reader'
-import { createGitHubReader } from '@keystatic/core/reader/github'
 import Markdoc from '@markdoc/markdoc'
 
-import ActionLink from '@/app/components/ActionLink'
-import Container from '@/app/components/Container'
-import Image from '@/app/components/Image'
-import Tag from '@/app/components/Tag'
-import Title from '@/app/components/Title'
+import ProjectDetail from '@/components/ProjectDetail'
+import { getAllProjectParams, getProject } from '@/lib/data'
+import { locales } from '@/lib/dictionaries'
+import { setupFetchWithUserAgent } from '@/lib/fetch-setup'
 
-import keystaticConfig from '../../../../../keystatic.config'
-import { locales } from '../../../dictionaries'
+setupFetchWithUserAgent()
 
-if (typeof window === 'undefined') {
-  const originalFetch = globalThis.fetch
-
-  globalThis.fetch = (url, init) => {
-    const headers = new Headers(init?.headers)
-
-    // GitHub API requires a User-Agent. Cloudflare doesn't always provide one.
-    if (!headers.has('User-Agent')) {
-      headers.set('User-Agent', 'Keystatic-App/1.0.0')
-    }
-
-    return originalFetch(url, {
-      ...init,
-      headers,
-    })
-  }
-}
-const reader =
-  process.env.NODE_ENV === 'development'
-    ? createReader(process.cwd(), keystaticConfig)
-    : createGitHubReader(keystaticConfig, {
-        repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
-        token: process.env.KEYSTATIC_GITHUB_TOKEN,
-      })
 export async function generateStaticParams() {
-  const params = []
-
-  for (const lang of locales) {
-    const projects =
-      lang === 'nl'
-        ? await reader.collections.projectsNL.all()
-        : await reader.collections.projects.all()
-
-    for (const project of projects) {
-      params.push({
-        lang,
-        slug: project.slug,
-      })
-    }
-  }
-
-  return params
-}
-
-async function getProject(lang: string, slug: string) {
-  'use cache'
-  cacheLife('weeks')
-
-  const project =
-    lang === 'nl'
-      ? await reader.collections.projectsNL.read(slug)
-      : await reader.collections.projects.read(slug)
-  if (!project) return null
-
-  const { node } = await project.content()
-  const errors = Markdoc.validate(node)
-  if (errors.length) {
-    console.error(errors)
-    throw new Error('Invalid content')
-  }
-
-  const renderable = Markdoc.transform(node)
-  // not returning entire object because classes and functions aren't supported in use cache
-  return {
-    title: project.title,
-    description: project.description,
-    thumbnail: {
-      src: project.thumbnail.src,
-      width: project.thumbnail.width,
-      height: project.thumbnail.height,
-    },
-    tags: [...project.tags],
-    links: project.links.map(link => ({
-      url: link.url,
-      title: link.title,
-      isCta: link.isCTA,
-    })),
-    renderable: JSON.parse(JSON.stringify(renderable)),
-  }
+  return await getAllProjectParams(locales)
 }
 
 export default async function Project({
@@ -102,44 +20,27 @@ export default async function Project({
   const { lang, slug } = await params
   const project = await getProject(lang, slug)
   if (!project) {
-    return <div>No Project Found (slug: {slug})</div>
+    return <div className="m-auto w-full">No Project Found (slug: {slug})</div>
   }
   return (
-    <Container>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 py-6 text-left">
-        <Image
-          src={project.thumbnail.src}
-          alt={project.title}
-          width={project.thumbnail.width!}
-          height={project.thumbnail.height!}
-          sizes="(max-width: 768px) 100vw, 768px"
-          className="rounded-l"
-        />
-        <Title element="h1" level="headline">
-          {project.title}
-        </Title>
-        <p>{project.description}</p>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map(tag => (
-            <Tag key={tag} text={tag} className="bg-layer2"></Tag>
-          ))}
-        </div>
-
-        <div className="[&>article>p]:mb-6 [&>p]:leading-relaxed">
+    <ProjectDetail>
+      <ProjectDetail.Image
+        src={project.thumbnail.src}
+        alt={project.title}
+        width={project.thumbnail.width!}
+        height={project.thumbnail.height!}
+      />
+      <ProjectDetail.Title>{project.title}</ProjectDetail.Title>
+      <ProjectDetail.Description>
+        {project.description}
+      </ProjectDetail.Description>
+      <ProjectDetail.Tags tags={project.tags} />
+      <ProjectDetail.Content>
+        <div className="[&>article>p]:mb-6 [&>article>ul]:list-outside [&>article>ul]:list-disc [&>article>ul]:pl-5 [&>p]:leading-relaxed">
           {Markdoc.renderers.react(project.renderable, React)}
         </div>
-        <div className="flex gap-4">
-          {project.links.map(link => (
-            <ActionLink
-              isCTA={link.isCta}
-              key={link.url}
-              href={link.url}
-              isExternal={true}
-              text={link.title}
-            />
-          ))}
-        </div>
-      </div>
-    </Container>
+      </ProjectDetail.Content>
+      <ProjectDetail.Links links={project.links} />
+    </ProjectDetail>
   )
 }

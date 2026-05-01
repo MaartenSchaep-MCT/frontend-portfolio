@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
-import { LanguageSelect } from './LanguageSelect'
-import ThemeToggle from './ThemeToggle'
+import { LanguageSelect } from '@/components/LanguageSelect'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default async function Navbar({ lang }: { lang: string }) {
   return (

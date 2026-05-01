@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 
-import Footer from '../components/Footer'
-import NavBar from '../components/NavBar'
-import { hasLocale } from '../dictionaries'
+import Footer from '@/components/Footer'
+import NavBar from '@/components/NavBar'
+import { hasLocale } from '@/lib/dictionaries'
 
 export default async function Layout({
   children,

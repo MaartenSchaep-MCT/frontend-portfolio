@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import useBoop from '../hooks/use-boop'
+import useBoop from '@/hooks/use-boop'
 
 export default function ActionLink({
   text,

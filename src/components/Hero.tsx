@@ -1,9 +1,8 @@
-import AnimatedDownloadAction from '@/app/components/AnimatedActionLinks/AnimatedDownloadAction'
-import AnimatedSeeProjectsAction from '@/app/components/AnimatedActionLinks/AnimatedSeeProjectsAction'
-import AnimatedWaveImage from '@/app/components/AnimatedWaveImage'
-import Title from '@/app/components/Title'
-
-import type { Dictionary } from '../dictionaries'
+import AnimatedDownloadAction from '@/components/AnimatedActionLinks/AnimatedDownloadAction'
+import AnimatedSeeProjectsAction from '@/components/AnimatedActionLinks/AnimatedSeeProjectsAction'
+import AnimatedWaveImage from '@/components/AnimatedWaveImage'
+import Title from '@/components/Title'
+import type { Dictionary } from '@/lib/dictionaries'
 
 export const Hero = ({
   dictionary,

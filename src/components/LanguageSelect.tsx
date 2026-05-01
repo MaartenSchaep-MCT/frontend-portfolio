@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 
-import useBoop from '../hooks/use-boop'
+import useBoop from '@/hooks/use-boop'
 
 export const LanguageSelect = ({ defaultLang }: { defaultLang: string }) => {
   const router = useRouter()

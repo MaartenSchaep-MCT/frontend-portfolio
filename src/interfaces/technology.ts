@@ -1,6 +1,6 @@
 import { Entry } from '@keystatic/core/reader'
 
-import config from '../../../keystatic.config'
+import config from '../../keystatic.config'
 
 export type Technology = Omit<
   Entry<typeof config.collections.technologies>,
