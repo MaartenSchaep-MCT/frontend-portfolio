@@ -4,8 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 import { TechnologyDialog } from '@/components/TechnologyDialog'
-import { Technology } from '@/interfaces/technology'
 import { Dictionary } from '@/lib/dictionaries'
+import { Technology } from '@/types/technology'
 
 export default function TechnologyCard({
   technology,

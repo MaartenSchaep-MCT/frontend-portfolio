@@ -1,8 +1,6 @@
-import { Entry } from '@keystatic/core/reader'
-
 import type { Dictionary } from '@/lib/dictionaries'
+import { Project } from '@/types/project'
 
-import config from '../../keystatic.config'
 import ActionLink from './ActionLink'
 import Image from './Image'
 import Tag from './Tag'
@@ -13,7 +11,7 @@ export default function ProjectCard({
   lang,
   dictionary,
 }: {
-  project: Omit<Entry<typeof config.collections.projects>, 'content'>
+  project: Project
   slug: string
   lang: string
   dictionary: Dictionary

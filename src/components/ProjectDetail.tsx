@@ -5,7 +5,7 @@ import Container from '@/components/Container'
 import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import Title from '@/components/Title'
-import { ProjectLink } from '@/interfaces/project-link'
+import { ProjectLink } from '@/types/project-link'
 
 const ProjectDetail = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -67,7 +67,7 @@ const ProjectLinks = ({ links }: { links: ProjectLink[] }) => {
     <div className="flex flex-wrap gap-2">
       {links.map(link => (
         <ActionLink
-          isCTA={link.isCta}
+          isCTA={link.isCTA}
           key={link.url}
           href={link.url}
           isExternal={true}

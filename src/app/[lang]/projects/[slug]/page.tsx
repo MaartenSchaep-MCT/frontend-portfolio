@@ -34,13 +34,13 @@ export default async function Project({
       <ProjectDetail.Description>
         {project.description}
       </ProjectDetail.Description>
-      <ProjectDetail.Tags tags={project.tags} />
+      <ProjectDetail.Tags tags={Array.from(project.tags)} />
       <ProjectDetail.Content>
         <div className="[&>article>p]:mb-6 [&>article>ul]:list-outside [&>article>ul]:list-disc [&>article>ul]:pl-5 [&>p]:leading-relaxed">
           {Markdoc.renderers.react(project.renderable, React)}
         </div>
       </ProjectDetail.Content>
-      <ProjectDetail.Links links={project.links} />
+      <ProjectDetail.Links links={Array.from(project.links)} />
     </ProjectDetail>
   )
 }

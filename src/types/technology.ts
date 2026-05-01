@@ -2,11 +2,13 @@ import { Entry } from '@keystatic/core/reader'
 
 import config from '../../keystatic.config'
 
-export type Technology = Omit<
+export type Technology = {
+  slug: string
+} & Omit<
   Entry<typeof config.collections.technologies>,
   'experience' | 'projects'
 > & {
-  projects: (Omit<Entry<typeof config.collections.projects>, 'content'> & {
-    slug: string
-  })[]
-}
+    projects: (Omit<Entry<typeof config.collections.projects>, 'content'> & {
+      slug: string
+    })[]
+  }

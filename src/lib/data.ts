@@ -1,7 +1,13 @@
 import { cacheLife, cacheTag } from 'next/cache'
 import { createReader } from '@keystatic/core/reader'
 import { createGitHubReader } from '@keystatic/core/reader/github'
-import Markdoc from '@markdoc/markdoc'
+import Markdoc, { RenderableTreeNodes } from '@markdoc/markdoc'
+
+import { Project } from '@/types/project'
+import { ProjectDetail } from '@/types/project-detail'
+import { ProjectParam } from '@/types/project-param'
+import { ProjectWithSlug } from '@/types/project-with-slug'
+import { TechnologyWithDetails } from '@/types/technology-with-details'
 
 import keystaticConfig from '../../keystatic.config'
 
@@ -12,7 +18,7 @@ export const reader =
         repo: `${process.env.GITHUB_USER}/${process.env.GITHUB_REPO}`,
         token: process.env.KEYSTATIC_GITHUB_TOKEN,
       })
-export async function getProjects(lang: string) {
+export async function getProjects(lang: string): Promise<ProjectWithSlug[]> {
   'use cache'
   // weeks is fine since app will be rebuilt when there is new content
   cacheLife('weeks')
@@ -30,7 +36,9 @@ export async function getProjects(lang: string) {
     }
   })
 }
-export async function getAllProjectParams(locales: string[]) {
+export async function getAllProjectParams(
+  locales: string[],
+): Promise<ProjectParam[]> {
   const params = []
 
   for (const lang of locales) {
@@ -49,7 +57,10 @@ export async function getAllProjectParams(locales: string[]) {
 
   return params
 }
-export async function getProject(lang: string, slug: string) {
+export async function getProject(
+  lang: string,
+  slug: string,
+): Promise<ProjectDetail | null> {
   'use cache'
   // weeks is fine since app will be rebuilt when there is new content
 
@@ -70,26 +81,17 @@ export async function getProject(lang: string, slug: string) {
   }
 
   const renderable = Markdoc.transform(node)
+  const { content, ...serializableEntry } = project
   // not returning entire object because classes and functions aren't supported in use cache
   return {
-    title: project.title,
-    description: project.description,
-    thumbnail: {
-      src: project.thumbnail.src,
-      width: project.thumbnail.width,
-      height: project.thumbnail.height,
-    },
-    tags: [...project.tags],
-    links: project.links.map(link => ({
-      url: link.url,
-      title: link.title,
-      isCta: link.isCTA,
-    })),
+    ...(serializableEntry as Project),
     renderable: JSON.parse(JSON.stringify(renderable)),
   }
 }
 
-export async function getTechnologies(lang: string) {
+export async function getTechnologies(
+  lang: string,
+): Promise<TechnologyWithDetails[]> {
   'use cache'
   // weeks is fine since app will be rebuilt when there is new content
 
@@ -111,7 +113,7 @@ export async function getTechnologies(lang: string) {
       const { experience, projects, ...serializableEntry } = technology.entry
       const { node } = await technology.entry.experience()
 
-      const renderable = Markdoc.transform(node)
+      const renderable = Markdoc.transform(node) as RenderableTreeNodes
 
       const populatedProjects = (projects || [])
         .map(projectSlug => {
