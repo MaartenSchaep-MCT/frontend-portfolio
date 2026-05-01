@@ -1,3 +1,5 @@
+//I placed an underscore in filename, so it doesn't get used, because loading.tsx and streaming doesn't work well on cloudflare, to test locally remove underscore.
+
 export default function Loading() {
   return (
     <div className="gap-07 p-05 grid min-h-dvh place-content-center">
