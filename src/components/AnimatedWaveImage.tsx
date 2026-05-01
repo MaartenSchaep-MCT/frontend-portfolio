@@ -13,7 +13,6 @@ export default function AnimatedWaveImage({ blurUrl }: { blurUrl?: string }) {
     <div className="relative">
       <Image
         onMouseEnterAction={waveTrigger}
-        format="webp"
         className="relative z-2 max-w-3xs rounded-full"
         src="maarten_yxeq4r"
         alt="Profile picture of Maarten"

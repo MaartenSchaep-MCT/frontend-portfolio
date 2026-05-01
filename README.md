@@ -1,7 +1,6 @@
 ## loading.tsx
 
-Ik heb bewust loading.tsx hernoemt naar \_loading.tsx zodat het niet wordt gebruikt.
-Als ik loading.tsx gebruik dan werkt het niet meer op Cloudflare Workers. Lokaal werkt het wel (gewoon underscore wegdoen en dan wordt het wel gebruikt).
+I have consciously not used loading.tsx since that didn't work when deploying on Cloudflare Workers.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

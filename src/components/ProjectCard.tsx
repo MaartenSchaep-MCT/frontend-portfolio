@@ -1,9 +1,8 @@
+import ActionLink from '@/components/ActionLink'
+import Image from '@/components/Image'
+import Tag from '@/components/Tag'
 import type { Dictionary } from '@/lib/dictionaries'
 import { Project } from '@/types/project'
-
-import ActionLink from './ActionLink'
-import Image from './Image'
-import Tag from './Tag'
 
 export default function ProjectCard({
   project,
@@ -20,7 +19,6 @@ export default function ProjectCard({
     <div className="bg-layer2 p-06 gap-05 flex flex-col rounded-xl">
       <div className="relative aspect-video">
         <Image
-          format="webp"
           src={project.thumbnail.src}
           alt={project.thumbnail.alt ? project.thumbnail.alt : project.title}
           width={project.thumbnail.width ?? 0}
