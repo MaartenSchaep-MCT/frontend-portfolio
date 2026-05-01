@@ -14,6 +14,7 @@ export default function ActionLink({
   onMouseEnter,
   className,
   iconLeft,
+  ariaLabel,
 }: {
   text: string
   isCTA?: boolean
@@ -25,6 +26,7 @@ export default function ActionLink({
   onMouseEnter?: () => void
   className?: string
   iconLeft?: boolean
+  ariaLabel?: string
 }) {
   const btnClass = `transition-colors flex grow md:grow-0 ease-normal py-04 px-06 rounded-m cursor-pointer flex gap-03 font-normal items-center justify-center ${isCTA ? 'bg-brand text-cta hover:bg-brand-alt' : 'bg-layer2 text-neutral hover:bg-layer3'} ${className ?? ''} ${isTertiary ? 'bg-transparent font-mono text-2 hover:underline hover:bg-transparent' : ''}`
   const [arrowStyle, arrowTrigger] = useBoop({
@@ -42,6 +44,7 @@ export default function ActionLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={ariaLabel}
         onMouseEnter={() => {
           arrowTrigger()
           boxTrigger()
@@ -93,6 +96,7 @@ export default function ActionLink({
         className={`${btnClass} ${iconLeft ? 'flex-row-reverse' : ''}`}
         href={href}
         onMouseEnter={onMouseEnter}
+        aria-label={ariaLabel}
       >
         {text}
         {icon && <span className="overflow-visible">{icon}</span>}
@@ -105,6 +109,7 @@ export default function ActionLink({
       href={href}
       className={`${btnClass} ${iconLeft ? 'flex-row-reverse' : ''}`}
       onMouseEnter={onMouseEnter}
+      aria-label={ariaLabel}
     >
       {text}
       {icon && <span className="overflow-visible">{icon}</span>}

@@ -43,6 +43,7 @@ export default function ProjectCard({
         text={dictionary.projects.viewProject}
         isExternal={true}
         className="bg-layer3 hover:bg-layer4"
+        ariaLabel={`${dictionary.projects.viewProject} ${project.title}`}
       />
     </div>
   )
