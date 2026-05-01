@@ -10,6 +10,7 @@ export default function Image({
   height,
   format,
   onMouseEnterAction: onMouseEnter,
+  quality,
   sizes,
   className,
   loading,
@@ -24,6 +25,7 @@ export default function Image({
   height: number
   format?: string
   onMouseEnterAction?: () => void
+  quality?: number
   sizes?: string
   className?: string
   loading?: 'eager' | 'lazy'
@@ -48,6 +50,7 @@ export default function Image({
       preload={preload}
       placeholder={blurUrl ? 'blur' : undefined}
       blurDataURL={blurUrl}
+      quality={quality}
     />
   )
 }

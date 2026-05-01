@@ -59,6 +59,7 @@ export default async function Project({
           loading="eager"
           fetchPriority="high"
           blurUrl={blurUrl}
+          quality={85}
         />
       ) : null}
       <ProjectDetail.Title>{project.title}</ProjectDetail.Title>

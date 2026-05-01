@@ -25,6 +25,7 @@ const ProjectImage = ({
   loading,
   fetchPriority,
   preload,
+  quality,
   blurUrl,
 }: {
   src: string
@@ -34,6 +35,7 @@ const ProjectImage = ({
   loading: 'lazy' | 'eager'
   fetchPriority: 'high' | 'low'
   preload: boolean
+  quality: number
   blurUrl?: string
 }) => {
   return (
@@ -47,6 +49,7 @@ const ProjectImage = ({
       loading={loading}
       fetchPriority={fetchPriority}
       preload={preload}
+      quality={quality}
       blurUrl={blurUrl}
     />
   )

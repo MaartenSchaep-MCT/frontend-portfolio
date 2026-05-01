@@ -20,6 +20,7 @@ export default function AnimatedWaveImage({ blurUrl }: { blurUrl?: string }) {
         width={240}
         height={240}
         sizes="240px"
+        quality={85}
         loading="eager"
         preload={true}
         fetchPriority="high"
