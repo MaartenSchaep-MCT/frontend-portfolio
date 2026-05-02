@@ -19,8 +19,8 @@ export const Hero = async ({
     console.error(e)
   }
   return (
-    <section className="gap-09 py-07 flex flex-col-reverse items-center justify-center md:flex-row md:py-13">
-      <div className="gap-05 flex flex-col justify-center">
+    <section className="gap-09 py-09 flex flex-col-reverse items-center justify-center md:flex-row md:py-13">
+      <div className="gap-08 flex flex-col justify-center">
         <div className="gap-04 flex flex-col justify-center">
           <Title element="h1" level="headline">
             {dictionary.hero.welcomeMessage}
@@ -29,7 +29,7 @@ export const Hero = async ({
             {dictionary.hero.welcomeDescription}
           </p>
         </div>
-        <div className="gap-07 jsutify-center flex flex-wrap">
+        <div className="gap-06 jsutify-center flex flex-wrap">
           <AnimatedDownloadAction
             text={dictionary.hero.downloadResume}
             lang={lang}

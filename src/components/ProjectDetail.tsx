@@ -93,7 +93,7 @@ const ProjectLinks = ({ links }: { links: ProjectLink[] }) => {
   )
 }
 const ProjectContent = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>
+  return <div className="pt-06">{children}</div>
 }
 
 ProjectDetail.Image = ProjectImage

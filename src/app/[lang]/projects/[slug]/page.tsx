@@ -63,10 +63,10 @@ export default async function Project({
         />
       ) : null}
       <ProjectDetail.Title>{project.title}</ProjectDetail.Title>
+      <ProjectDetail.Tags tags={Array.from(project.tags)} />
       <ProjectDetail.Description>
         {project.description}
       </ProjectDetail.Description>
-      <ProjectDetail.Tags tags={Array.from(project.tags)} />
       <ProjectDetail.Content>
         <div className="[&>article>p]:mb-6 [&>article>ul]:list-outside [&>article>ul]:list-disc [&>article>ul]:pl-5 [&>p]:leading-relaxed">
           {Markdoc.renderers.react(project.renderable, React)}

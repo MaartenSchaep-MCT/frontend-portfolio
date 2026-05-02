@@ -32,7 +32,7 @@ export default async function Page({ params }: PageProps<'/[lang]'>) {
   return (
     <Container>
       <Hero dictionary={dictionary} lang={lang} />
-      <div className="gap-09 flex flex-col">
+      <div className="flex flex-col gap-10">
         <Section>
           <Section.Title>{dictionary.technologies.technologies}</Section.Title>
           {technologies.length === 0 ? (

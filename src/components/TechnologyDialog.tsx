@@ -42,9 +42,9 @@ export const TechnologyDialog = ({
       closedby="any"
       ref={dialogRef}
       onClose={onClose}
-      className="md:px-07 md:py-06 fixed mx-auto max-h-dvh w-full max-w-6xl transform overflow-hidden overscroll-contain bg-transparent p-0 backdrop:bg-black/80 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
+      className="md:px-07 md:py-06 backdrop:backdrop-transitions dialog-transitions fixed mx-auto h-full max-h-dvh w-full max-w-6xl translate-y-full transform overflow-hidden overscroll-contain bg-transparent p-0 opacity-0 backdrop:bg-transparent open:translate-y-0 open:opacity-100 open:backdrop:bg-black/80 md:top-1/2 md:left-1/2 md:h-fit md:-translate-x-1/2 md:-translate-y-1/2 md:open:-translate-y-1/2 starting:open:translate-y-full starting:open:opacity-0 starting:open:backdrop:bg-transparent md:starting:open:-translate-y-1/2"
     >
-      <div className="scrollbar-wide text-neutral bg-layer1 py-06 px-07 max-h-dvh overflow-x-hidden overflow-y-auto overscroll-contain rounded-xl md:max-h-[90vh]">
+      <div className="text-neutral bg-layer1 py-06 px-07 h-full max-h-dvh overflow-x-hidden overflow-y-auto overscroll-contain rounded-xl md:h-fit md:max-h-[90vh]">
         <div className="flex items-center justify-between">
           <div className="py-04 pr-06 rounded-m gap-05 flex items-center text-left">
             <Image
@@ -95,7 +95,7 @@ export const TechnologyDialog = ({
             <Title level="subheadline" element="h3">
               {dictionary.technologies.featuredProjects}
             </Title>
-            <div className="gap-06 grid grid-cols-1 md:grid-cols-3">
+            <div className="gap-06 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {technology.projects.map(project => (
                 <ProjectCard
                   key={project.slug}

@@ -12,7 +12,7 @@ export default async function Navbar({
   dictionary: Dictionary
 }) {
   return (
-    <nav className="px-05 md:px-09 py-06 gap-05 flex flex-wrap items-center justify-between">
+    <nav className="px-06 md:px-09 py-06 gap-05 flex flex-wrap items-center justify-between">
       <Link
         href={`/${lang}`}
         className="text-large font-large leading-large text-text-normal text-grey-95 dark:text-grey-5 font-mono hover:underline"

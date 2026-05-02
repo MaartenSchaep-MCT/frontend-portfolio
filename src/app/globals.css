@@ -3,23 +3,34 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --dialog-animation-duration: 300ms;
-  --dialog-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --dialog-animation-easing-in: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --dialog-animation-easing-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --layer1: var(--grey-5);
+  --layer2: var(--grey-10);
+  --layer3: var(--grey-15);
+  --layer4: var(--grey-20);
+  --neutral: var(--grey-95);
+  --soft: var(--grey-85);
+  --light: var(--grey-70);
+  --cta-button: var(--grey-95);
+  --layer1-backdrop: var(--color-grey-5-50);
+  --scrollbar: var(--grey-50);
+  color-scheme: light;
+}
+.dark {
+  --layer1: var(--grey-95);
+  --layer2: var(--grey-90);
+  --layer3: var(--grey-85);
+  --layer4: var(--grey-80);
   --brand: #fff41a;
-  --brand-15: #fffbb2;
-  --brand-25: #fff980;
-  --brand-30: #fff766;
-  --brand-35: #fff64d;
-  --brand-40: #fff533;
-  --brand-45: #fff41a;
-  --brand-50: #fff200;
-  --brand-55: #e5da00;
-  --brand-60: #e5da00;
-  --brand-65: #b2aa00;
-  --green: #1aff48;
-  --red: #ff571a;
+  --neutral: var(--grey-5);
+  --soft: var(--grey-15);
+  --light: var(--grey-25);
+  --cta-button: var(--grey-95);
+  --layer1-backdrop: var(--color-grey-95-50);
+  --scrollbar: var(--grey-40);
+  color-scheme: dark;
+}
+
+@theme inline {
   --grey-3: #f8f8f7;
   --grey-5: #f3f3f2;
   --grey-7: #eeeeec;
@@ -45,35 +56,10 @@
   --grey-95: #0d0d0c;
   --color-grey-5-50: rgba(243, 243, 242, 0.5);
   --color-grey-95-50: rgba(13, 13, 12, 0.5);
-
-  --layer1: var(--grey-5);
-  --layer2: var(--grey-10);
-  --layer3: var(--grey-15);
-  --layer4: var(--grey-20);
   --brand: #fff41a;
   --brand-alt: #e5da00;
-  --neutral: var(--grey-95);
-  --soft: var(--grey-85);
-  --light: var(--grey-70);
-  --cta-button: var(--grey-95);
-  --layer1-backdrop: var(--color-grey-5-50);
-  --scrollbar: var(--grey-50);
-}
-.dark {
-  --layer1: var(--grey-95);
-  --layer2: var(--grey-90);
-  --layer3: var(--grey-85);
-  --layer4: var(--grey-80);
-  --brand: #fff41a;
-  --neutral: var(--grey-5);
-  --soft: var(--grey-15);
-  --light: var(--grey-25);
-  --cta-button: var(--grey-95);
-  --layer1-backdrop: var(--color-grey-95-50);
-  --scrollbar: var(--grey-40);
-}
-
-@theme inline {
+  --dialog-animation-duration: 300ms;
+  --dialog-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
   --font-sans: var(--font-google-sans-flex), sans-serif;
   --font-mono: var(--font-google-sans-flex), monospace;
   --radius-s: 0.25rem;
@@ -123,6 +109,7 @@
   --text-13: 3.75rem;
   --text-14: 4.25rem;
   --text-15: 4.75rem;
+
   /* Font styles*/
   --font-mono: var(--font-google-sans-code), sans-serif;
   --font-sans-serif: var(--font-google-sans-flex), sans-serif;
@@ -150,41 +137,55 @@
   --text-small: var(--text-2);
   --font-weight-small: 400;
   --leading-small: var(--spacing-05);
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes rotateIn {
+    from {
+      transform: rotate(180deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  --animate-fadeIn: 400ms cubic-bezier(0.25, 0.1, 0.25, 1) both fade-in;
+  --animate-fadeOut: 400ms cubic-bezier(0.25, 0.1, 0.25, 1) both fade-out;
+
+  --animate-rotateIn: rotateIn 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --animate-scaleIn: scaleIn 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-@layer utilities {
-  .scrollbar-subtle {
-    &::-webkit-scrollbar {
-      width: var(--spacing-03);
-      height: var(--spacing-03);
-    }
-    &::-webkit-scrollbar-track {
-      border-right: var(--radius-xl);
-      background-color: var(--layer2);
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: var(--radius-xl);
-      background-color: var(--scrollbar);
-    }
-  }
-  .scrollbar-wide {
-    &::-webkit-scrollbar {
-      width: var(--spacing-04);
-      height: var(--spacing-04);
-      padding-left: var(--spacing-04);
-      border-top-right-radius: var(--radius-xl);
-      border-bottom-right-radius: var(--radius-xl);
-      background-color: var(--layer1);
-    }
-    &::-webkit-scrollbar-track {
-      border-top-right-radius: var(--radius-xl);
-      border-bottom-right-radius: var(--radius-xl);
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: var(--radius-xl);
-      background-color: var(--scrollbar);
-    }
-  }
+@utility backdrop-transitions {
+  transition:
+    display var(--dialog-animation-duration) allow-discrete,
+    overlay var(--dialog-animation-duration) allow-discrete,
+    background-color var(--dialog-animation-duration)
+      var(--dialog-animation-easing);
+}
+@utility dialog-transitions {
+  transition:
+    display var(--dialog-animation-duration) allow-discrete,
+    overlay var(--dialog-animation-duration) allow-discrete,
+    opacity var(--dialog-animation-duration) var(--dialog-animation-easing),
+    translate var(--dialog-animation-duration) var(--dialog-animation-easing);
 }
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -193,114 +194,58 @@
 }
 
 ::view-transition-old(root) {
-  animation: 400ms cubic-bezier(0.25, 0.1, 0.25, 1) both fade-out;
+  animation: var(--animate-fadeOut);
 }
 
 ::view-transition-new(root) {
-  animation: 400ms cubic-bezier(0.25, 0.1, 0.25, 1) both fade-in;
+  animation: var(--animate-fadeIn);
 }
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
+@layer base {
+  select:open::picker-icon {
+    transform: rotateZ(135deg) translateY(-3px) translateX(3px);
   }
-}
-
-@keyframes fade-out {
-  to {
-    opacity: 0;
-  }
-}
-select:open::picker-icon {
-  transform: rotateZ(135deg) translateY(-3px) translateX(3px);
-}
-select {
-  &::picker-icon {
-    content: '';
-    display: inline-flex;
-    width: 0.5rem;
-    height: 0.5rem;
-    overflow: visible;
-    line-height: 0;
-    margin-right: var(--spacing-02);
-    z-index: 2;
-    border-bottom: 2px solid var(--neutral);
-    border-left: 2px solid var(--neutral);
-    transform-box: fill-box;
-    transform-origin: center;
-    transform: rotateZ(-45deg) translateX(0) translateY(-2px);
-    transition: transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-  &,
-  &::picker(select) {
-    appearance: base-select;
-    color: var(--neutral);
-    border: none;
-    border-radius: var(--radius-m);
-  }
-  &::picker(select) {
-    background-color: var(--layer2);
-  }
-  option {
-    &::checkmark {
-      content: none;
+  select {
+    &::picker-icon {
+      content: '';
+      display: inline-flex;
+      width: 0.5rem;
+      height: 0.5rem;
+      overflow: visible;
+      line-height: 0;
+      margin-right: var(--spacing-02);
+      z-index: 2;
+      border-bottom: 2px solid var(--neutral);
+      border-left: 2px solid var(--neutral);
+      transform-box: fill-box;
+      transform-origin: center;
+      transform: rotateZ(-45deg) translateX(0) translateY(-2px);
+      transition: transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
     }
-    &:hover {
-      background: var(--layer4);
-    }
-    &:focus {
-      background: var(--layer3);
-    }
-    &:focus-visible {
-      border: 1px solid white;
+    &,
+    &::picker(select) {
+      appearance: base-select;
+      color: var(--neutral);
+      border: none;
       border-radius: var(--radius-m);
     }
-  }
-}
-.lucide-moon {
-  transform-origin: bottom right;
-  transition:
-    transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1),
-    rotate 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
-  animation: rotateIn 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-.lucide-sun {
-  animation: scaleIn 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
-  transition:
-    transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1),
-    rotate 300ms cubic-bezier(0.25, 0.1, 0.25, 1),
-    scale 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
-  & .path1,
-  .path2,
-  .path3,
-  .path4,
-  .path5,
-  .path6,
-  .path7,
-  .path8,
-  .circle {
-    transform-origin: center;
-    transition:
-      transform 300ms var(--transition-duration)
-        cubic-bezier(0.25, 0.1, 0.25, 1),
-      rotate 300ms var(--transition-duration) cubic-bezier(0.25, 0.1, 0.25, 1),
-      scale 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-}
-@keyframes scaleIn {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-@keyframes rotateIn {
-  from {
-    transform: rotate(180deg);
-  }
-  to {
-    transform: rotate(360deg);
+    &::picker(select) {
+      background-color: var(--layer2);
+    }
+    option {
+      &::checkmark {
+        content: none;
+      }
+      &:hover {
+        background: var(--layer4);
+      }
+      &:focus {
+        background: var(--layer3);
+      }
+      &:focus-visible {
+        border: 1px solid white;
+        border-radius: var(--radius-m);
+      }
+    }
   }
 }
 @keyframes hand-wave {
@@ -368,61 +313,5 @@ select {
   }
   100% {
     transform: scaleY(1);
-  }
-}
-html:has(dialog[open]) {
-  overflow: hidden;
-  scrollbar-gutter: stable;
-}
-
-dialog {
-  transition:
-    display var(--dialog-animation-duration) allow-discrete,
-    overlay var(--dialog-animation-duration) allow-discrete,
-    opacity var(--dialog-animation-duration) var(--dialog-animation-easing),
-    transform var(--dialog-animation-duration) var(--dialog-animation-easing);
-
-  opacity: 0;
-}
-
-dialog[open] {
-  opacity: 1;
-}
-
-dialog::backdrop {
-  transition:
-    display var(--dialog-animation-duration) allow-discrete,
-    overlay var(--dialog-animation-duration) allow-discrete,
-    background-color var(--dialog-animation-duration)
-      var(--dialog-animation-easing);
-
-  background-color: rgba(0, 0, 0, 0);
-}
-
-dialog[open]::backdrop {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-@starting-style {
-  dialog[open] {
-    opacity: 0;
-  }
-  dialog[open]::backdrop {
-    background-color: rgba(0, 0, 0, 0);
-  }
-}
-@media (width <= 34rem) {
-  dialog {
-    transform: translateY(100%);
-  }
-  dialog[open] {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  @starting-style {
-    dialog[open] {
-      opacity: 0;
-      transform: translateY(100%);
-    }
   }
 }

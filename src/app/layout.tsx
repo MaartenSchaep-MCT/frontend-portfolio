@@ -6,15 +6,13 @@ import './globals.css'
 const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
   subsets: ['latin'],
-  adjustFontFallback: false,
-  fallback: ['sans-serif'],
+  fallback: ['monospace'],
 })
 
 const googleSansFlex = Google_Sans_Flex({
   variable: '--font-google-sans-flex',
   subsets: ['latin'],
-  adjustFontFallback: false,
-  fallback: ['monospace'],
+  fallback: ['sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -40,9 +38,14 @@ export default function RootLayout({
       })();
     `
   return (
+    // html:has(dialog[open]) {
+    //   overflow: hidden;
+    //   scrollbar-gutter: stable;
+    // }
+
     <html
       lang="en"
-      className={`${googleSansCode.variable} ${googleSansFlex.variable} scroll-py-07 h-full scroll-smooth antialiased`}
+      className={`${googleSansCode.variable} ${googleSansFlex.variable} scroll-py-07 h-full scroll-smooth antialiased has-[dialog[open]]:overflow-hidden has-[dialog[open]]:[scrollbar-gutter:stable]`}
       suppressHydrationWarning
     >
       <head>
@@ -51,7 +54,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: themeCode }}
         />
       </head>
-      <body className="scrollbar-subtle bg-layer1 text-neutral flex min-h-full flex-col font-sans font-normal">
+      <body className="bg-layer1 text-neutral flex min-h-full flex-col font-sans font-normal">
         {children}
       </body>
     </html>
